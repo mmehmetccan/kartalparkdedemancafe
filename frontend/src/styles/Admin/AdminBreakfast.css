@@ -1,0 +1,29 @@
+.admin-breakfast-page, .admin-breakfast-grid, .admin-breakfast-card { min-width: 0; }
+.admin-breakfast-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; }
+.admin-breakfast-card { min-width: 0; padding: 19px; border: 1px solid #dde5dc; border-radius: 12px; background: #fff; box-shadow: 0 6px 17px rgba(31, 48, 36, .06); }
+.admin-breakfast-card > header { display: flex; min-width: 0; align-items: center; gap: 10px; color: #2c7651; }
+.admin-breakfast-card header div { display: grid; min-width: 0; }
+.admin-breakfast-card header span, .admin-breakfast-note > span { color: #977733; font-size: 10px; font-weight: 800; letter-spacing: 1.4px; }
+.admin-breakfast-card h2 { margin: 3px 0 0; overflow-wrap: anywhere; color: #203128; font-family: Georgia, serif; font-size: 26px; font-weight: 500; }
+.admin-breakfast-note { min-height: 90px; margin: 20px 0; padding: 12px; border-radius: 8px; background: #f5f7f3; }
+.admin-breakfast-note p { margin: 6px 0 0; overflow-wrap: anywhere; color: #56645b; font-size: 13px; line-height: 1.45; }
+.admin-breakfast-card footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.admin-breakfast-card time { color: #7d897f; font-size: 12px; }
+.admin-breakfast-card button { display: inline-flex; min-height: 36px; align-items: center; gap: 6px; padding: 0 10px; border: 0; border-radius: 7px; background: #1e704a; color: #fff; cursor: pointer; font-size: 12px; font-weight: 750; }
+.admin-breakfast-card button:disabled { background: #a9b7ad; cursor: wait; }
+@media (max-width: 1100px) { .admin-breakfast-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) {
+  .admin-breakfast-grid { grid-template-columns: 1fr; gap: 12px; }
+  .admin-breakfast-card { padding: 15px; border-radius: 11px; }
+  .admin-breakfast-card h2 { font-size: 23px; }
+  .admin-breakfast-note { min-height: 0; margin: 14px 0; padding: 11px; }
+  .admin-breakfast-card footer { gap: 9px; }
+}
+.admin-breakfast-details { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 16px; color: #526058; font-size: 12px; font-weight: 700; }.admin-breakfast-details span { display: inline-flex; align-items: center; gap: 5px; }.admin-breakfast-details svg { color: #947333; }.admin-breakfast-edit-button { flex: 0 0 auto; margin-left: auto; background: #edf6ef !important; color: #26714d !important; }.admin-breakfast-edit-form { display: grid; min-width: 0; gap: 9px; margin-top: 16px; }.admin-breakfast-edit-form input, .admin-breakfast-edit-form textarea { width: 100%; padding: 9px; border: 1px solid #d6ded5; border-radius: 7px; font: inherit; }.admin-breakfast-edit-form > div:not(.admin-breakfast-edit-actions) { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }.admin-breakfast-edit-actions { display: flex; justify-content: end; gap: 8px; }.admin-breakfast-edit-actions button:first-child { background: #e9eeea; color: #506058; }.admin-breakfast-edit-actions button:last-child { background: #1e704a; }
+@media (max-width: 400px) {
+  .admin-breakfast-card > header { gap: 8px; }
+  .admin-breakfast-card h2 { font-size: 21px; }
+  .admin-breakfast-edit-button { min-height: 33px !important; padding: 0 8px !important; font-size: 11px !important; }
+  .admin-breakfast-details { gap: 9px; margin-top: 13px; }
+  .admin-breakfast-edit-form > div:not(.admin-breakfast-edit-actions) { grid-template-columns: 1fr; }
+}

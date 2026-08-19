@@ -1,0 +1,156 @@
+.guest-login-page {
+  display: grid;
+  min-height: 100svh;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: #f7f8f4;
+  color: #203228;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.guest-login-page, .guest-login-page *, .guest-login-page *::before, .guest-login-page *::after { box-sizing: border-box; }
+
+.guest-login-topbar {
+  display: flex;
+  min-height: 86px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 max(28px, calc((100vw - 1240px) / 2));
+  border-bottom: 1px solid #e0e5de;
+  background: rgba(255, 255, 255, .96);
+}
+
+.guest-login-brand { display: flex; align-items: center; gap: 12px; }
+.guest-login-brand,
+.guest-login-topbar-actions,
+.guest-login-input-wrap,
+.guest-login-submit { min-width: 0; }
+.guest-login-brand img { width: 51px; height: 51px; border-radius: 50%; object-fit: cover; box-shadow: 0 5px 13px rgba(27, 42, 32, .13); }
+.guest-login-brand div { display: grid; gap: 4px; line-height: 1; }
+.guest-login-brand strong { color: #21352a; font-size: 15px; letter-spacing: 2px; }
+.guest-login-brand span { color: #a17b2b; font-size: 10px; font-weight: 900; letter-spacing: 3.5px; }
+.guest-login-topbar-actions { display: inline-flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.guest-login-topbar > p { display: inline-flex; min-height: 36px; align-items: center; padding: 0 15px; margin: 0; border-radius: 999px; background: #193c2a; color: #fff; font-size: 11px; font-weight: 850; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 5px 12px rgba(25, 60, 42, .16); }
+
+.guest-login-layout {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1.07fr) minmax(400px, .93fr);
+}
+
+.guest-login-visual {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  align-items: end;
+  padding: clamp(32px, 5vw, 78px);
+  background: #183627 url('/park-dedeman-lobby.png') center / cover no-repeat;
+  color: #fff;
+}
+
+.guest-login-visual::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 26, 17, .08), rgba(8, 26, 17, .78));
+  content: '';
+}
+
+.guest-login-welcome { position: relative; z-index: 1; max-width: 560px; text-shadow: 0 4px 22px rgba(0, 0, 0, .28); }
+.guest-login-welcome p { margin: 0 0 14px; color: #efd17c; font-size: 11px; font-weight: 900; letter-spacing: 3px; }
+.guest-login-welcome h1 { margin: 0; color: #fff; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2.65rem, 4.7vw, 5rem); font-weight: 500; letter-spacing: -3px; line-height: .99; }
+.guest-login-welcome span { display: block; max-width: 380px; margin-top: 20px; color: rgba(255, 255, 255, .86); font-size: 14px; line-height: 1.6; }
+
+.guest-login-form-area {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(34px, 6vw, 86px);
+  background: #fff;
+}
+
+.guest-login-kicker { margin: 0 0 11px; color: #a17b2b; font-size: 10px; font-weight: 900; letter-spacing: 2.3px; }
+.guest-login-form-area h2 { max-width: 390px; margin: 0; color: #203228; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2rem, 3.3vw, 3rem); font-weight: 500; letter-spacing: -1.55px; line-height: 1.05; }
+.guest-login-description { max-width: 370px; margin: 14px 0 29px; color: #6d7b72; font-size: 14px; line-height: 1.55; }
+
+.guest-login-form { display: grid; width: min(100%, 380px); gap: 11px; }
+.guest-login-form label { display: grid; gap: 4px; }
+.guest-login-form label > span { color: #32443a; font-size: 13px; font-weight: 850; }
+.guest-login-form label small { color: #88948b; font-size: 10px; line-height: 1.45; }
+.guest-login-input-wrap { display: flex; min-height: 55px; align-items: center; gap: 11px; padding: 0 15px; border: 1px solid #d2ddd3; border-radius: 10px; background: #fbfdfb; color: #a9822c; transition: border-color 160ms ease, box-shadow 160ms ease; }
+.guest-login-input-wrap:focus-within { border-color: #287d54; box-shadow: 0 0 0 4px rgba(40, 125, 84, .12); }
+.guest-login-input-wrap input { width: 100%; height: 53px; border: 0; outline: 0; background: transparent; color: #203228; font: 650 15px Inter, ui-sans-serif, system-ui, sans-serif; }
+.guest-login-input-wrap input::placeholder { color: #a5afa8; font-weight: 450; }
+.guest-login-submit { display: inline-flex; min-height: 54px; align-items: center; justify-content: center; gap: 8px; margin-top: 5px; border: 0; border-radius: 10px; background: linear-gradient(135deg, #287d54, #15513a); box-shadow: 0 10px 18px rgba(21, 81, 58, .22); color: #fff; cursor: pointer; font: 800 14px Inter, ui-sans-serif, system-ui, sans-serif; transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease; }
+.guest-login-submit:hover:not(:disabled) { box-shadow: 0 13px 22px rgba(21, 81, 58, .3); filter: brightness(1.04); transform: translateY(-1px); }
+.guest-login-submit:disabled { cursor: wait; opacity: .65; }
+.guest-login-form-note { margin: 2px 0 0; color: #8b968e; font-size: 10px; line-height: 1.45; text-align: center; }
+
+@media (min-width: 1100px) {
+  .guest-login-topbar {
+    min-height: 98px;
+    padding: 0 max(48px, calc((100vw - 1360px) / 2));
+    border-bottom-color: #dbe2da;
+    box-shadow: 0 2px 15px rgba(29, 52, 38, .045);
+  }
+  .guest-login-brand { gap: 15px; }
+  .guest-login-brand img { width: 61px; height: 61px; }
+  .guest-login-brand div { gap: 6px; }
+  .guest-login-brand strong { font-size: 17px; letter-spacing: 2.4px; }
+  .guest-login-brand span { font-size: 11px; letter-spacing: 4px; }
+  .guest-login-topbar > p { min-height: 41px; padding: 0 19px; font-size: 11px; letter-spacing: 1.3px; }
+}
+
+@media (max-width: 760px) {
+  .guest-login-topbar { min-height: 72px; padding: 0 18px; }
+  .guest-login-brand img { width: 42px; height: 42px; }
+  .guest-login-brand strong { font-size: 13px; letter-spacing: 1.8px; }
+  .guest-login-brand span { font-size: 10px; letter-spacing: 3px; }
+  .guest-login-topbar-actions { gap: 7px; }
+  .guest-login-topbar > p { display: inline-flex; min-height: 31px; padding: 0 11px; font-size: 9px; letter-spacing: .7px; }
+  .guest-login-layout { grid-template-columns: 1fr; }
+  .guest-login-visual { min-height: 385px; padding: 30px 22px 104px; background-image: url('/park-dedeman-lobby.png'); background-position: center 65%; background-size: auto 128%; }
+  .guest-login-visual::before { position: absolute; z-index: 1; right: 0; bottom: 0; left: 0; height: 176px; background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .92) 84%, #fff); content: ''; pointer-events: none; }
+  .guest-login-welcome { z-index: 2; }
+  .guest-login-welcome { max-width: 420px; margin-bottom: 78px; }
+  .guest-login-welcome h1 { font-size: clamp(2.2rem, 9vw, 3.25rem); letter-spacing: -2px; }
+  .guest-login-welcome span { margin-top: 13px; font-size: 13px; }
+  .guest-login-form-area { position: relative; z-index: 2; margin-top: -100px; padding: 126px 22px 25px; background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff 150px); }
+  .guest-login-form { width: min(100%, 440px); }
+}
+
+@media (max-width: 420px) {
+  .guest-login-topbar { min-height: 66px; padding: 0 14px; }
+  .guest-login-brand { gap: 9px; }
+  .guest-login-brand img { width: 38px; height: 38px; }
+  .guest-login-brand strong { font-size: 11px; letter-spacing: 1.3px; }
+  .guest-login-brand span { font-size: 8px; letter-spacing: 2.35px; }
+  .guest-login-topbar-actions .app-language-switcher-label { display: none; }
+  .guest-login-topbar > p { min-height: 29px; padding: 0 9px; font-size: 8px; }
+  .guest-login-visual { min-height: 310px; padding: 24px 18px 84px; }
+  .guest-login-welcome p { margin-bottom: 10px; font-size: 9px; letter-spacing: 2.4px; }
+  .guest-login-welcome h1 { font-size: clamp(2rem, 9vw, 2.6rem); }
+  .guest-login-welcome span { display: none; }
+  .guest-login-form-area { margin-top: -84px; padding: 106px 18px 20px; }
+  .guest-login-form-area h2 { font-size: 29px; }
+  .guest-login-description { margin: 10px 0 22px; font-size: 12px; }
+  .guest-login-input-wrap { min-height: 51px; }
+  .guest-login-input-wrap input { height: 49px; font-size: 14px; }
+  .guest-login-submit { min-height: 51px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guest-login-input-wrap, .guest-login-submit { transition: none; }
+}
+
+html[dir='rtl'] .guest-login-topbar,
+html[dir='rtl'] .guest-login-layout,
+html[dir='rtl'] .guest-login-form,
+html[dir='rtl'] .guest-login-brand,
+html[dir='rtl'] .guest-login-input-wrap {
+  direction: rtl;
+}
+
+html[dir='rtl'] .guest-login-topbar-actions {
+  justify-content: flex-start;
+}

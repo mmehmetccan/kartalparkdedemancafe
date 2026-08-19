@@ -1,0 +1,26 @@
+.admin-order-history-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+.admin-order-history-tabs button { display: inline-flex; align-items: center; gap: 7px; min-height: 37px; padding: 0 13px; border: 1px solid #d2ddd2; border-radius: 8px; background: #fff; color: #617065; cursor: pointer; font-size: 12px; font-weight: 750; }
+.admin-order-history-tabs button.active { border-color: #2e7954; background: #edf6ef; color: #1d6543; }
+.admin-order-history-filters { display: flex; align-items: end; justify-content: space-between; gap: 15px; margin-bottom: 16px; padding: 13px; border: 1px solid #dfe6de; border-radius: 10px; background: #fff; }
+.admin-order-history-periods { display: flex; gap: 6px; }
+.admin-order-history-periods button { min-height: 34px; padding: 0 12px; border: 1px solid #d2ddd2; border-radius: 7px; background: #fff; color: #617065; cursor: pointer; font-size: 12px; font-weight: 750; }
+.admin-order-history-periods button.active { border-color: #2e7954; background: #edf6ef; color: #1d6543; }
+.admin-order-history-filters label { display: grid; gap: 5px; color: #65736a; font-size: 10px; font-weight: 750; }
+.admin-order-history-filters input { height: 34px; padding: 0 8px; border: 1px solid #cfdbd0; border-radius: 7px; background: #fff; color: #2d3d32; font: inherit; font-size: 12px; }
+.admin-order-history-range { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 16px; color: #617166; font-size: 12px; font-weight: 650; }
+.admin-order-history-range svg { color: #8e7231; }
+.admin-order-history-list { overflow: hidden; border: 1px solid #dfe6de; border-radius: 11px; background: #fff; }
+.admin-order-history-list > header { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 17px 19px; border-bottom: 1px solid #e9eee8; }
+.admin-order-history-list > header div, .admin-order-history-list > header span { display: flex; align-items: center; gap: 8px; }
+.admin-order-history-list > header div { color: #2c704c; }
+.admin-order-history-list h2 { margin: 0; color: #293a2f; font-size: 15px; }
+.admin-order-history-list > header span { color: #7d897f; font-size: 11px; }
+.admin-order-history-table-wrap { overflow-x: auto; }
+.admin-order-history-list table { width: 100%; border-collapse: collapse; text-align: left; }
+.admin-order-history-list th, .admin-order-history-list td { padding: 13px 19px; border-bottom: 1px solid #edf0eb; color: #536158; font-size: 12px; }
+.admin-order-history-list th { color: #8c7643; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.admin-order-history-list td:first-child, .admin-order-history-list td:last-child { color: #2d4335; font-weight: 750; white-space: nowrap; }
+.admin-order-history-empty { display: grid; min-height: 180px; place-content: center; justify-items: center; gap: 9px; color: #77847b; font-size: 13px; text-align: center; }
+.admin-order-history-empty svg { color: #a18442; }
+.admin-order-history-empty p { margin: 0; }
+@media (max-width: 620px) { .admin-order-history-filters { align-items: stretch; flex-direction: column; }.admin-order-history-periods { width: 100%; overflow-x: auto; }.admin-order-history-periods button { white-space: nowrap; }.admin-order-history-filters label, .admin-order-history-filters input { width: 100%; }.admin-order-history-list > header { align-items: start; flex-direction: column; }.admin-order-history-list th, .admin-order-history-list td { padding: 12px; } }

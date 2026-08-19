@@ -1,0 +1,271 @@
+.not-found-page {
+  min-height: 100vh;
+  display: grid;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(29, 102, 70, .12), transparent 28%),
+    radial-gradient(circle at 80% 82%, rgba(155, 119, 48, .12), transparent 24%),
+    linear-gradient(180deg, #f8f7f2, #eef3ee);
+  color: #233228;
+}
+
+.not-found-shell {
+  width: min(100%, 960px);
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(0, .98fr) minmax(0, 1.02fr);
+  overflow: hidden;
+  border: 1px solid rgba(31, 51, 39, .08);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, .82);
+  box-shadow: 0 24px 58px rgba(18, 31, 23, .11);
+  backdrop-filter: blur(10px);
+}
+
+.not-found-visual {
+  position: relative;
+  display: grid;
+  align-content: end;
+  min-height: 460px;
+  padding: 28px;
+  background:
+    linear-gradient(180deg, rgba(8, 22, 15, .08), rgba(8, 22, 15, .66)),
+    url('/park-dedeman-entrance.png') center / cover no-repeat;
+  color: #fff;
+}
+
+.not-found-visual::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7, 20, 14, .12), rgba(7, 20, 14, .54) 70%, rgba(7, 20, 14, .72)),
+    radial-gradient(circle at top, rgba(255, 255, 255, .12), transparent 52%);
+  content: '';
+}
+
+.not-found-logo {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 999px;
+  background: rgba(7, 21, 14, .28);
+  backdrop-filter: blur(10px);
+}
+
+.not-found-logo img {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.not-found-logo div {
+  display: grid;
+  gap: 3px;
+  line-height: 1;
+}
+
+.not-found-logo strong {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.not-found-logo span {
+  color: #efd17c;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.not-found-visual-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 330px;
+  margin-top: 180px;
+}
+
+.not-found-visual-copy p {
+  margin: 0 0 12px;
+  color: #efd17c;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.not-found-visual-copy h2 {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.3rem, 4vw, 3.3rem);
+  font-weight: 500;
+  letter-spacing: -1.8px;
+  line-height: 1;
+}
+
+.not-found-visual-copy span {
+  display: block;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, .8);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.not-found-card {
+  display: grid;
+  align-content: center;
+  padding: 34px 30px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(246, 244, 238, .94));
+  text-align: center;
+}
+
+.not-found-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.not-found-code {
+  margin: 0;
+  color: #9b7730;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.not-found-card h1 {
+  margin: 14px 0 10px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 4vw, 2.7rem);
+  font-weight: 500;
+  letter-spacing: -1.2px;
+  line-height: 1.05;
+}
+
+.not-found-card > span {
+  display: block;
+  max-width: 420px;
+  margin: 0 auto;
+  color: #66756c;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.not-found-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: center;
+  margin-top: 18px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(29, 102, 70, .08);
+  color: #355644;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.not-found-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.not-found-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #1d6646;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 12px 22px rgba(29, 102, 70, .18);
+}
+
+.not-found-actions button:last-child {
+  background: #efe8d5;
+  color: #5e4522;
+  box-shadow: none;
+}
+
+@media (max-width: 520px) {
+  .not-found-page {
+    padding: 14px;
+  }
+
+  .not-found-shell {
+    grid-template-columns: 1fr;
+    border-radius: 22px;
+  }
+
+  .not-found-visual {
+    min-height: 240px;
+    padding: 18px;
+  }
+
+  .not-found-logo {
+    padding: 10px 12px;
+  }
+
+  .not-found-logo img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .not-found-logo strong {
+    font-size: 12px;
+  }
+
+  .not-found-logo span {
+    font-size: 8px;
+  }
+
+  .not-found-visual-copy {
+    margin-top: 60px;
+    max-width: 260px;
+  }
+
+  .not-found-card {
+    padding: 26px 18px 28px;
+  }
+
+  .not-found-card-top {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .not-found-actions {
+    flex-direction: column;
+  }
+
+  .not-found-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+html[dir='rtl'] .not-found-card-top,
+html[dir='rtl'] .not-found-actions,
+html[dir='rtl'] .not-found-note {
+  direction: rtl;
+}
+
+html[dir='rtl'] .not-found-actions button {
+  flex-direction: row-reverse;
+}
