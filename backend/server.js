@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
 const path = require('path');
 const { connectDB } = require('./config/db');
+const { assertJwtSecret } = require('./config/env');
 const { localeMiddleware } = require('./middleware/localeMiddleware');
 const { startBreakfastScheduler } = require('./services/breakfastScheduler');
 
@@ -12,6 +14,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+for (const menuDir of [
+    path.join(__dirname, '../frontend/public/menu-products'),
+    path.join(__dirname, '../frontend/dist/menu-products'),
+    path.join(__dirname, '../static/menu-products')
+]) {
+    if (fs.existsSync(menuDir)) app.use('/menu-products', express.static(menuDir));
+}
 app.use(localeMiddleware);
 
 // Rotaları içeri aktar
@@ -36,6 +45,13 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
+    try {
+        assertJwtSecret();
+    } catch (error) {
+        console.error(`Yapılandırma hatası: ${error.message}`);
+        process.exit(1);
+    }
+
     await connectDB();
     startBreakfastScheduler();
     app.listen(PORT, () => console.log(`Sunucu ${PORT} portunda ayaklandı.`));

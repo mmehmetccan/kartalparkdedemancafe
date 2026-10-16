@@ -1,7 +1,17 @@
+export { resolveProductImageUrl } from './publicAsset';
+
 export const MENU_SECTIONS = [
   { id: 'ana-yemekler' },
   { id: 'ara-sicaklar' },
-  { id: 'kahvaltilar' },
+  {
+    id: 'kahvaltilar',
+    children: [
+      { id: 'omletler' },
+      { id: 'tostlar' },
+      { id: 'sandvicler' },
+      { id: 'serpme-kahvalti' },
+    ],
+  },
   {
     id: 'tatli-meyve',
     children: [
@@ -39,8 +49,17 @@ export const getDefaultSubsection = (sectionId) => getSectionChildren(sectionId)
 export const inferMenuClassification = (category = '', name = '') => {
   const source = `${String(category).trim()} ${String(name).trim()}`.toLowerCase();
 
-  if (source.includes('kahvalti') || source.includes('kahvaltı') || source.includes('breakfast')) {
-    return { menuSection: 'kahvaltilar', menuSubsection: '' };
+  if (source.includes('omlet') || source.includes('omelet') || source.includes('yumurta') || source.includes('egg')) {
+    return { menuSection: 'kahvaltilar', menuSubsection: 'omletler' };
+  }
+  if (source.includes('sandvic') || source.includes('sandviç') || source.includes('sandwich')) {
+    return { menuSection: 'kahvaltilar', menuSubsection: 'sandvicler' };
+  }
+  if (source.includes('tost') || source.includes('toast')) {
+    return { menuSection: 'kahvaltilar', menuSubsection: 'tostlar' };
+  }
+  if (source.includes('kahvalti') || source.includes('kahvaltı') || source.includes('breakfast') || source.includes('serpme')) {
+    return { menuSection: 'kahvaltilar', menuSubsection: 'serpme-kahvalti' };
   }
   if (source.includes('ana yemek') || source.includes('anayemek') || source.includes('main course')) {
     return { menuSection: 'ana-yemekler', menuSubsection: '' };
@@ -76,12 +95,4 @@ export const resolveProductFromLegacy = (product = {}) => {
     };
   }
   return inferMenuClassification(product.category, product.name);
-};
-
-export const resolveProductImageUrl = (imageUrl) => {
-  if (!imageUrl) return '';
-  if (/^https?:\/\//i.test(imageUrl)) return imageUrl;
-  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-  const serverBase = apiBase.replace(/\/api\/?$/, '');
-  return `${serverBase}${imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`}`;
 };

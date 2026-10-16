@@ -3,6 +3,7 @@ import { CalendarPlus, ClipboardList, Coffee, History, LayoutDashboard, LogOut, 
 import { clearAdminSession, getAdminSession } from '../lib/adminSession';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useI18n } from '../i18n/useI18n';
+import { publicAsset } from '../lib/publicAsset';
 import '../styles/Admin/AdminLayout.css';
 
 const AdminLayout = () => {
@@ -23,7 +24,7 @@ const AdminLayout = () => {
     <div className="admin-shell">
       <aside className="admin-sidebar">
         <div className="admin-brand">
-          <img src="/park-dedeman-logo.jpg" alt={t('common.hotelName')} />
+          <img src={publicAsset('park-dedeman-logo.webp')} alt={t('common.hotelName')} />
           <div><span>{t('common.hotelName')}</span><strong>{t('common.adminPanel')}</strong></div>
         </div>
         <nav className="admin-navigation" aria-label={t('adminLayout.ariaLabel')}>

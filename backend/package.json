@@ -9,6 +9,7 @@
     "dev": "nodemon server.js",
     "db:init": "node scripts/initDatabase.js",
     "seed:products": "node scripts/seedProducts.js",
+    "seed:menu": "node scripts/seedMenuProducts.js",
     "seed:admin": "node scripts/seedAdmin.js"
   },
   "keywords": [],

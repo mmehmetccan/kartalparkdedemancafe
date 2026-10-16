@@ -1,0 +1,29 @@
+Options -Indexes
+DirectoryIndex index.html
+AddType image/webp .webp
+
+<IfModule mod_authz_core.c>
+  <FilesMatch "(^\\.env|\\.env\\.|atlas-credentials\\.env$|mysql-root\\.secret\\.txt$)">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /parkdedemankartal/
+  RewriteCond %{HTTP:Authorization} .
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+  RewriteRule ^(backend|frontend|secrets|\.git|export|tools|\.cursor|node_modules)(/|$) - [F,L]
+  RewriteRule (^|/)\.(env|git) - [F,L]
+  RewriteRule (atlas-credentials\.env|mysql-root\.secret\.txt)$ - [F,L]
+  RewriteRule \.(sql|zip|log)$ - [F,L]
+  RewriteRule ^uploads/.*\.(php|phtml|phar)$ - [F,L]
+  RewriteRule ^api/(config\.php|lib\.php|messages\.json)$ - [F,L]
+
+  RewriteRule ^api(?:/.*)?$ api/index.php [QSA,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . index.html [L]
+</IfModule>

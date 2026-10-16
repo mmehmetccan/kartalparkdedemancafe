@@ -1,7 +1,16 @@
 const MENU_SECTIONS = [
     { id: 'ana-yemekler', label: 'Ana Yemekler' },
     { id: 'ara-sicaklar', label: 'Ara Sıcaklar' },
-    { id: 'kahvaltilar', label: 'Kahvaltılar' },
+    {
+        id: 'kahvaltilar',
+        label: 'Kahvaltılar',
+        children: [
+            { id: 'omletler', label: 'Omletler' },
+            { id: 'tostlar', label: 'Tostlar' },
+            { id: 'sandvicler', label: 'Sandviçler' },
+            { id: 'serpme-kahvalti', label: 'Serpme Kahvaltı' }
+        ]
+    },
     {
         id: 'tatli-meyve',
         label: 'Tatlılar ve Meyveler',
@@ -65,8 +74,17 @@ const isValidMenuSubsection = (menuSection, menuSubsection) => {
 const inferMenuClassification = (category = '', name = '') => {
     const source = `${String(category).trim()} ${String(name).trim()}`.toLowerCase();
 
-    if (source.includes('kahvalti') || source.includes('kahvaltı') || source.includes('breakfast')) {
-        return { menuSection: 'kahvaltilar', menuSubsection: null };
+    if (source.includes('omlet') || source.includes('omelet') || source.includes('yumurta') || source.includes('egg')) {
+        return { menuSection: 'kahvaltilar', menuSubsection: 'omletler' };
+    }
+    if (source.includes('sandvic') || source.includes('sandviç') || source.includes('sandwich')) {
+        return { menuSection: 'kahvaltilar', menuSubsection: 'sandvicler' };
+    }
+    if (source.includes('tost') || source.includes('toast')) {
+        return { menuSection: 'kahvaltilar', menuSubsection: 'tostlar' };
+    }
+    if (source.includes('kahvalti') || source.includes('kahvaltı') || source.includes('breakfast') || source.includes('serpme')) {
+        return { menuSection: 'kahvaltilar', menuSubsection: 'serpme-kahvalti' };
     }
     if (source.includes('ana yemek') || source.includes('anayemek') || source.includes('main course')) {
         return { menuSection: 'ana-yemekler', menuSubsection: null };

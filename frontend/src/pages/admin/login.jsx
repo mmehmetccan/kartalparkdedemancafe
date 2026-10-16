@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { LockKeyhole, LogIn, UserRound } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { api } from '../../lib/api';
 import { getAdminSession, saveAdminSession } from '../../lib/adminSession';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
 import { useI18n } from '../../i18n/useI18n';
+import { publicAsset } from '../../lib/publicAsset';
 import '../../styles/Admin/AdminLogin.css';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useI18n();
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(location.state?.username || '');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -43,7 +45,7 @@ const AdminLogin = () => {
         <div className="admin-login-language">
           <LanguageSwitcher compact />
         </div>
-        <img src="/park-dedeman-logo.jpg" alt={t('common.hotelName')} />
+        <img src={publicAsset('park-dedeman-logo.webp')} alt={t('common.hotelName')} />
         <p>{t('adminLogin.brand')}</p>
         <h1>{t('adminLogin.title')}</h1>
         <span>{t('adminLogin.description')}</span>

@@ -27,7 +27,10 @@ const Breakfast = () => {
         const newIds = data.filter((item) => !knownBreakfastIds.current.has(item._id)).map((item) => item._id);
         if (newIds.length) {
           setNewBreakfastIds(newIds);
-          announceNewItems(t('adminOperations.breakfast.newItems', { count: newIds.length }));
+          announceNewItems(t('adminOperations.breakfast.newItems', { count: newIds.length }), {
+            count: newIds.length,
+            tabMessage: t('adminOperations.breakfast.tabAlert'),
+          });
           window.setTimeout(() => setNewBreakfastIds([]), 6000);
         }
       }

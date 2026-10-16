@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const { getPool } = require('../config/db');
 const { normalizeProductPayload } = require('../config/menuCategories');
 const { mapProduct } = require('../utils/apiShape');
+const { normalizeProductImagePath } = require('../utils/imagePath');
 
 const createId = () => crypto.randomUUID();
 
@@ -17,7 +18,7 @@ const serializeProduct = (payload) => {
         intensity: normalized.intensity ?? null,
         sellingPrice: normalized.sellingPrice,
         costPrice: normalized.costPrice,
-        imageUrl: normalized.imageUrl || '',
+        imageUrl: normalizeProductImagePath(normalized.imageUrl || ''),
         translations: JSON.stringify(normalized.translations || {}),
         isAvailable: normalized.isAvailable !== false ? 1 : 0
     };

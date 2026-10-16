@@ -5,6 +5,7 @@ import { getAdminSession } from '../lib/adminSession';
 import { getGuestSession, isGuestSessionExpired } from '../lib/guestSession';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../i18n/useI18n';
+import { publicAsset } from '../lib/publicAsset';
 import '../styles/NotFound.css';
 
 const NotFound = () => {
@@ -36,7 +37,7 @@ const NotFound = () => {
       <div className="not-found-shell">
         <section className="not-found-visual" aria-hidden="true">
           <div className="not-found-logo">
-            <img src="/park-dedeman-logo.jpg" alt="" />
+            <img src={publicAsset('park-dedeman-logo.webp')} alt="" />
             <div>
               <strong>PARK DEDEMAN</strong>
               <span>KARTAL</span>

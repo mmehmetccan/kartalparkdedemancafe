@@ -20,9 +20,12 @@ import { useI18n } from './i18n/useI18n';
 
 function App() {
   const { dir } = useI18n();
+  const basename = import.meta.env.BASE_URL === '/'
+    ? undefined
+    : String(import.meta.env.BASE_URL || '/').replace(/\/$/, '');
 
   return (
-    <Router>
+    <Router basename={basename}>
       {/* ToastContainer en dışa eklenir ki tüm sayfalarda bildirimler görünebilsin */}
       <ToastContainer autoClose={2000} position={dir === 'rtl' ? 'top-left' : 'top-right'} />
       

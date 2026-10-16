@@ -4,6 +4,13 @@
 *.env
 !*.env.example
 !.env.example
+secrets/
+*.secret.txt
+hosting/api/config.php
+
+# Disa aktarim paketleri
+export/
+*.zip
 
 # Dependencies
 node_modules/
@@ -25,6 +32,10 @@ pnpm-debug.log*
 # Runtime uploads
 uploads/
 **/uploads/
+
+# Generated previews and local editor files
+output/
+.cursor/
 
 # Editor and OS files
 .vscode/*

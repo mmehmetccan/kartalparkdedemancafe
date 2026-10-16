@@ -1,6 +1,7 @@
 const express = require('express');
 const orderRepository = require('../repositories/orderRepository');
 const productRepository = require('../repositories/productRepository');
+const orderEvents = require('../services/orderEvents');
 const { allowRoles, protectAdmin, protectGuest } = require('../middleware/authMiddleware');
 const { createAppError, sendAppError, sendError } = require('../utils/apiResponse');
 
@@ -94,6 +95,7 @@ router.post('/', protectGuest, async (req, res) => {
             totalCost,
             totalProfit: totalRevenue - totalCost
         });
+        orderEvents.orderCreated(order);
         return res.status(201).json(order);
     } catch (error) {
         return sendAppError(req, res, error, 400, 'orders.create_failed');
@@ -106,6 +108,11 @@ router.get('/active', protectAdmin, allowRoles(...STAFF_ROLES), async (req, res)
     } catch {
         return sendError(req, res, 500, 'orders.active_fetch_failed');
     }
+});
+
+// Personel ekranlarına sipariş hareketlerini anlık ileten olay akışı.
+router.get('/stream', protectAdmin, allowRoles(...STAFF_ROLES), (req, res) => {
+    orderEvents.register(req, res);
 });
 
 router.get('/history', protectAdmin, allowRoles(...STAFF_ROLES), async (req, res) => {
@@ -132,6 +139,7 @@ router.put('/:id/deliver', protectAdmin, allowRoles(...STAFF_ROLES), async (req,
     try {
         const order = await orderRepository.deliverPending(req.params.id);
         if (!order) return sendError(req, res, 404, 'orders.pending_not_found');
+        orderEvents.orderRemoved(order, 'delivered');
         return res.json(order);
     } catch {
         return sendError(req, res, 400, 'orders.deliver_failed');
@@ -142,6 +150,7 @@ router.put('/:id/cancel', protectAdmin, allowRoles(...STAFF_ROLES), async (req, 
     try {
         const order = await orderRepository.cancelPending(req.params.id);
         if (!order) return sendError(req, res, 404, 'orders.pending_not_found');
+        orderEvents.orderRemoved(order, 'cancelled');
         return res.json(order);
     } catch {
         return sendError(req, res, 400, 'orders.cancel_failed');

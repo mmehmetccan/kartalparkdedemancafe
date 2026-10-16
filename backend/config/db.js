@@ -1,4 +1,5 @@
 const mysql = require('mysql2/promise');
+const { getDatabaseConfig } = require('./env');
 
 let pool;
 
@@ -11,12 +12,10 @@ const getPool = () => {
 
 const connectDB = async () => {
     try {
+        const config = getDatabaseConfig();
+
         pool = mysql.createPool({
-            host: process.env.DB_HOST || '127.0.0.1',
-            port: Number(process.env.DB_PORT || 3306),
-            user: process.env.DB_USER || 'root',
-            password: process.env.DB_PASSWORD || '',
-            database: process.env.DB_NAME || 'kartalparkdedemancafe',
+            ...config,
             waitForConnections: true,
             connectionLimit: 10,
             timezone: 'Z',
@@ -26,7 +25,7 @@ const connectDB = async () => {
         const connection = await pool.getConnection();
         await connection.ping();
         connection.release();
-        console.log(`MySQL Bağlantısı Başarılı: ${process.env.DB_HOST || '127.0.0.1'}:${process.env.DB_PORT || 3306}/${process.env.DB_NAME || 'kartalparkdedemancafe'}`);
+        console.log(`MySQL Bağlantısı Başarılı: ${config.host}:${config.port}/${config.database}`);
     } catch (error) {
         console.error(`MySQL Hata: ${error.message}`);
         process.exit(1);

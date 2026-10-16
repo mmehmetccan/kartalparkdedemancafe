@@ -30,7 +30,7 @@
   padding: 28px;
   background:
     linear-gradient(180deg, rgba(8, 22, 15, .08), rgba(8, 22, 15, .66)),
-    url('/park-dedeman-entrance.png') center / cover no-repeat;
+    var(--hotel-entrance-image) center / cover no-repeat;
   color: #fff;
 }
 

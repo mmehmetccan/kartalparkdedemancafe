@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AlertTriangle, Banknote, Check, ClipboardList, CreditCard, RefreshCw, X, XCircle } from 'lucide-react';
+import { AlertTriangle, Banknote, Check, ClipboardList, CreditCard, RefreshCw, Radio, WifiOff, X, XCircle } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { api, withToken } from '../../lib/api';
 import { clearAdminSession, getAdminSession } from '../../lib/adminSession';
-import { announceNewItems } from '../../lib/notifications';
+import { announceNewItems, enableNotificationSound } from '../../lib/notifications';
+import { subscribeToOrderStream } from '../../lib/orderStream';
 import { useI18n } from '../../i18n/useI18n';
 import '../../styles/Admin/AdminOrders.css';
+
+const HIGHLIGHT_MS = 6000;
 
 const Orders = () => {
   const { locale, t } = useI18n();
@@ -14,7 +17,9 @@ const Orders = () => {
   const [updatingId, setUpdatingId] = useState(null);
   const [newOrderIds, setNewOrderIds] = useState([]);
   const [cancelTarget, setCancelTarget] = useState(null);
+  const [streamOnline, setStreamOnline] = useState(false);
   const knownOrderIds = useRef(null);
+  const highlightTimer = useRef(0);
   const session = getAdminSession();
 
   const money = useCallback(
@@ -38,8 +43,12 @@ const Orders = () => {
         const newIds = data.filter((order) => !knownOrderIds.current.has(order._id)).map((order) => order._id);
         if (newIds.length) {
           setNewOrderIds(newIds);
-          announceNewItems(t('adminOperations.orders.newItems', { count: newIds.length }));
-          window.setTimeout(() => setNewOrderIds([]), 6000);
+          window.clearTimeout(highlightTimer.current);
+          highlightTimer.current = window.setTimeout(() => setNewOrderIds([]), HIGHLIGHT_MS);
+          announceNewItems(t('adminOperations.orders.newItems', { count: newIds.length }), {
+            count: newIds.length,
+            tabMessage: t('adminOperations.orders.tabAlert'),
+          });
         }
       }
       knownOrderIds.current = currentIds;
@@ -53,14 +62,57 @@ const Orders = () => {
     }
   }, [session?.token, t, unauthorized]);
 
+  const handleStreamEvent = useCallback((event, payload) => {
+    if (event === 'ready') {
+      // Bağlantı kurulduğunda listeyi tazeleyerek kopuk kalınan süreyi kapat.
+      void loadOrders();
+      return;
+    }
+
+    if (event === 'order:created') {
+      setOrders((current) => (current.some((order) => order._id === payload._id) ? current : [...current, payload]));
+      knownOrderIds.current?.add(payload._id);
+      setNewOrderIds([payload._id]);
+      window.clearTimeout(highlightTimer.current);
+      highlightTimer.current = window.setTimeout(() => setNewOrderIds([]), HIGHLIGHT_MS);
+      announceNewItems(t('adminOperations.orders.newItems', { count: 1 }), {
+        tabMessage: t('adminOperations.orders.tabAlert'),
+      });
+      return;
+    }
+
+    if (event === 'order:removed') {
+      setOrders((current) => current.filter((order) => order._id !== payload._id));
+      knownOrderIds.current?.delete(payload._id);
+    }
+  }, [loadOrders, t]);
+
+  const streamHandler = useRef(handleStreamEvent);
+  useEffect(() => { streamHandler.current = handleStreamEvent; }, [handleStreamEvent]);
+
+  useEffect(() => { enableNotificationSound(); }, []);
+
+  useEffect(() => {
+    if (!session?.token) return undefined;
+    return subscribeToOrderStream({
+      token: session.token,
+      onEvent: (event, payload) => streamHandler.current(event, payload),
+      onStatus: (status) => setStreamOnline(status === 'online'),
+      onUnauthorized: unauthorized,
+    });
+  }, [session?.token, unauthorized]);
+
   useEffect(() => {
     const initialLoad = window.setTimeout(() => { void loadOrders(); }, 0);
-    const timer = window.setInterval(() => { void loadOrders(); }, 10_000);
-    return () => {
-      window.clearTimeout(initialLoad);
-      window.clearInterval(timer);
-    };
+    return () => window.clearTimeout(initialLoad);
   }, [loadOrders]);
+
+  // Canlı akış koptuğunda sipariş kaçmasın diye yedek yoklama devreye girer.
+  useEffect(() => {
+    if (streamOnline) return undefined;
+    const timer = window.setInterval(() => { void loadOrders(); }, 15_000);
+    return () => window.clearInterval(timer);
+  }, [loadOrders, streamOnline]);
 
   const deliver = async (order) => {
     setUpdatingId(order._id);
@@ -97,7 +149,13 @@ const Orders = () => {
     <div className="admin-orders-page">
       <header className="admin-page-heading">
         <div><p>{t('adminOperations.common.liveOperation')}</p><h1>{t('adminOperations.orders.title')}</h1><span>{t('adminOperations.orders.subtitle')}</span></div>
-        <button type="button" onClick={() => loadOrders(true)}><RefreshCw size={17} />{t('adminOperations.common.refresh')}</button>
+        <div className="admin-heading-actions">
+          <span className={`admin-live-badge ${streamOnline ? 'is-online' : 'is-offline'}`}>
+            {streamOnline ? <Radio size={13} /> : <WifiOff size={13} />}
+            {t(streamOnline ? 'adminOperations.orders.liveOn' : 'adminOperations.orders.liveOff')}
+          </span>
+          <button type="button" onClick={() => loadOrders(true)}><RefreshCw size={17} />{t('adminOperations.common.refresh')}</button>
+        </div>
       </header>
       {loading ? <div className="admin-page-loading">{t('adminOperations.orders.loading')}</div> : orders.length ? (
         <div className="admin-orders-grid">

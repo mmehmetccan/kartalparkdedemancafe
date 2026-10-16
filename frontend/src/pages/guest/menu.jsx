@@ -1,44 +1,21 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BedDouble, CheckCircle2, ChevronLeft, Coffee, CreditCard, LogOut, Minus, PhoneCall, Plus, ShoppingBag, ShoppingCart, WalletCards, X } from 'lucide-react';
+import { Apple, BedDouble, CakeSlice, CheckCircle2, ChevronLeft, Coffee, CreditCard, CupSoda, EggFried, Flame, LogOut, Minus, PhoneCall, Plus, ShoppingBag, ShoppingCart, UtensilsCrossed, WalletCards, X } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { api, withToken } from '../../lib/api';
 import { clearGuestSession, getGuestCart, getGuestSession, isGuestSessionExpired, saveGuestCart } from '../../lib/guestSession';
 import { useI18n } from '../../i18n/useI18n';
 import menuTranslations from '../../i18n/menuTranslations';
 import { resolveProductImageUrl, SECTION_TRAITS } from '../../lib/menuCategories';
+import { publicAsset } from '../../lib/publicAsset';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
+import ProductVisual from '../../components/ProductVisual';
+import { resolveProductMotionCutout, resolveProductMotionKey } from '../../lib/productMotion';
 import '../../styles/Guest/GuestMenu.css';
 
-const HOTEL_HERO_IMAGE = import.meta.env.VITE_HOTEL_HERO_IMAGE || '/park-dedeman-lobby.png';
-const PRODUCT_FALLBACK_IMAGE = '/menu-products/americano-v1.jpg';
-const DEFAULT_PRODUCT_IMAGE_IDS = {
-  Espresso: ['photo-1510707577719-ae7c14805e3a'],
-  Americano: ['photo-1494314671902-399b18174975', 'photo-1495474472287-4d71bcdd2085'],
-  Cappuccino: ['photo-1534778101976-62847782c213', 'photo-1509042239860-f550ce710b93'],
-  Latte: ['photo-1570968915860-54d5c301fa9f', 'photo-1442512595331-e89e73853f31'],
-  'Türk Kahvesi': ['photo-1541167760496-1628856ab772', 'photo-1514432324607-a09d9b4aefdd'],
-  'Iced Latte': ['photo-1461023058943-07fcbe16d735', 'photo-1512568400610-62da28bc8a13']
-};
-const COFFEE_IMAGE_SET = {
-  Espresso: '/menu-products/espresso-v1.jpg',
-  Americano: '/menu-products/americano-v1.jpg',
-  Cappuccino: '/menu-products/cappuccino-v1.jpg',
-  Latte: '/menu-products/latte-v1.jpg',
-  'Türk Kahvesi': '/menu-products/turk-kahvesi-v1.jpg',
-  'Iced Latte': '/menu-products/iced-latte-v1.jpg'
-};
+const HOTEL_HERO_IMAGE = import.meta.env.VITE_HOTEL_HERO_IMAGE || publicAsset('park-dedeman-lobby.webp');
+const PRODUCT_FALLBACK_IMAGE = publicAsset('menu-products/americano.webp');
 const getProductSourceName = (product) => String(product.baseName || product.name || '').trim();
-const applyDefaultCoffeeImage = (product) => {
-  const name = getProductSourceName(product);
-  const previousImageIds = DEFAULT_PRODUCT_IMAGE_IDS[name];
-  const updatedImage = COFFEE_IMAGE_SET[name];
-  const usesPreviousDefault = previousImageIds?.some((imageId) => product.imageUrl?.includes(imageId));
-  if (updatedImage && (!product.imageUrl || usesPreviousDefault || product.imageUrl === updatedImage)) {
-    return { ...product, imageUrl: updatedImage };
-  }
-  return product;
-};
 const PRODUCT_DETAIL_INTENSITIES = {
   espresso: 5,
   americano: 4,
@@ -80,7 +57,15 @@ const getLocalizedProductName = (product, translateMenu, language) => {
 const MENU_SECTIONS = [
   { id: 'ana-yemekler' },
   { id: 'ara-sicaklar' },
-  { id: 'kahvaltilar' },
+  {
+    id: 'kahvaltilar',
+    children: [
+      { id: 'omletler' },
+      { id: 'tostlar' },
+      { id: 'sandvicler' },
+      { id: 'serpme-kahvalti' }
+    ]
+  },
   {
     id: 'tatli-meyve',
     children: [
@@ -98,98 +83,158 @@ const MENU_SECTIONS = [
   { id: 'icecekler' }
 ];
 
-const CategoryMotion = ({ category }) => {
+const CATEGORY_CUTOUTS = {
+  kahveler: 'category-motion/premium/kahveler-v2.webp',
+  'ana-yemekler': 'category-motion/premium/ana-yemekler-v2.webp',
+  'ara-sicaklar': 'category-motion/premium/ara-sicaklar-v2.webp',
+  'tatli-meyve': 'category-motion/premium/tatli-meyve-v2.webp',
+  icecekler: 'category-motion/premium/icecekler-v2.webp',
+  kahvaltilar: 'category-motion/premium/kahvaltilar-v2.webp'
+};
+
+const ProductGroupScene = ({ category }) => {
+  const clipId = `guest-heading-cup-${category}`;
+
+  let scene;
   if (category === 'kahveler') {
-    return <svg className="guest-category-motion guest-category-motion-coffee" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
-      <ellipse className="guest-category-motion-shadow" cx="77" cy="76" rx="41" ry="4" />
-      <g className="guest-category-coffee-pot">
-        <path d="M89 7h30l-4 20H94z" />
-        <path d="M116 11c12 0 13 12 1 13" fill="none" />
-        <path d="M91 13l-12 5 13 4" />
-      </g>
-      <path className="guest-category-coffee-stream" d="M82 21c-7 9-7 17-7 29" />
-      <g className="guest-category-coffee-cup">
-        <path d="M48 48h51v13c0 9-7 14-16 14H64c-9 0-16-5-16-14z" />
-        <path d="M99 52h5c12 0 12 15 1 16h-8" fill="none" />
-        <path d="M42 75h66" fill="none" />
-        <path className="guest-category-coffee-surface" d="M51 49c13 4 31-4 45 0" fill="none" />
-      </g>
-      <path className="guest-category-coffee-steam guest-category-coffee-steam-one" d="M61 46c-7-9 8-12 1-22" fill="none" />
-      <path className="guest-category-coffee-steam guest-category-coffee-steam-two" d="M88 45c7-8-7-12 0-21" fill="none" />
-    </svg>;
-  }
-
-  if (category === 'ana-yemekler') {
-    return <svg className="guest-category-motion guest-category-motion-burger" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
-      <ellipse className="guest-category-motion-shadow" cx="75" cy="77" rx="44" ry="4" />
-      <path className="guest-category-burger-bottom" d="M39 64h72c0 9-8 12-17 12H56c-9 0-17-3-17-12z" />
-      <rect className="guest-category-burger-patty" x="37" y="55" width="76" height="11" rx="5.5" />
-      <path className="guest-category-burger-cheese" d="M42 51h67l-8 9-10-6-10 7-11-7-10 6z" />
-      <path className="guest-category-burger-green" d="M39 48c8-5 15 5 23 0s15 5 23 0 15 5 25 0v8H39z" />
-      <g className="guest-category-burger-top">
-        <path d="M40 45c2-19 16-30 35-30s33 11 35 30z" />
-        <g className="guest-category-burger-seeds">
-          <path d="M57 29l4-2M70 22l4 1M85 24l4-2M96 31l4 1" />
+    scene = (
+      <svg className="guest-category-motion guest-category-motion-coffee" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
+        <defs>
+          <clipPath id={clipId}>
+            <path d="M48 48h51v13c0 9-7 14-16 14H64c-9 0-16-5-16-14z" />
+          </clipPath>
+        </defs>
+        <ellipse className="guest-category-motion-shadow" cx="77" cy="76" rx="41" ry="4" />
+        <g className="guest-category-coffee-pot">
+          <path d="M89 7h30l-4 20H94z" />
+          <path d="M116 11c12 0 13 12 1 13" fill="none" />
+          <path d="M91 13l-12 5 13 4" />
         </g>
-      </g>
-    </svg>;
+        <path className="guest-category-coffee-stream" d="M82 21c-7 9-7 17-7 29" />
+        <ellipse className="guest-category-coffee-drip" cx="75" cy="24" rx="2.1" ry="2.6" />
+        <g className="guest-category-coffee-cup">
+          <path className="guest-category-coffee-body" d="M48 48h51v13c0 9-7 14-16 14H64c-9 0-16-5-16-14z" />
+          <g clipPath={`url(#${clipId})`}>
+            <rect className="guest-category-coffee-liquid" x="48" y="48" width="51" height="32" />
+            <path className="guest-category-coffee-crema" d="M50 50c14 4 32-4 47 0" />
+          </g>
+          <path className="guest-category-coffee-handle" d="M99 52h5c12 0 12 15 1 16h-8" fill="none" />
+          <path className="guest-category-coffee-saucer" d="M42 75h66" fill="none" />
+          <ellipse className="guest-category-coffee-ripple" cx="73.5" cy="51" rx="9" ry="2.4" />
+        </g>
+        <path className="guest-category-coffee-steam guest-category-coffee-steam-one" d="M61 46c-7-9 8-12 1-22" fill="none" />
+        <path className="guest-category-coffee-steam guest-category-coffee-steam-two" d="M88 45c7-8-7-12 0-21" fill="none" />
+      </svg>
+    );
+  } else if (category === 'ana-yemekler') {
+    scene = (
+      <svg className="guest-category-motion guest-category-motion-burger" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
+        <ellipse className="guest-category-motion-shadow" cx="75" cy="77" rx="44" ry="4" />
+        <path className="guest-category-burger-bottom guest-category-burger-layer guest-category-burger-layer-bottom" d="M39 64h72c0 9-8 12-17 12H56c-9 0-17-3-17-12z" />
+        <rect className="guest-category-burger-patty guest-category-burger-layer guest-category-burger-layer-patty" x="37" y="55" width="76" height="11" rx="5.5" />
+        <path className="guest-category-burger-cheese guest-category-burger-layer guest-category-burger-layer-cheese" d="M42 51h67l-8 9-10-6-10 7-11-7-10 6z" />
+        <path className="guest-category-burger-green guest-category-burger-layer guest-category-burger-layer-green" d="M39 48c8-5 15 5 23 0s15 5 23 0 15 5 25 0v8H39z" />
+        <g className="guest-category-burger-top guest-category-burger-layer guest-category-burger-layer-top">
+          <path d="M40 45c2-19 16-30 35-30s33 11 35 30z" />
+          <g className="guest-category-burger-seeds">
+            <path d="M57 29l4-2M70 22l4 1M85 24l4-2M96 31l4 1" />
+          </g>
+        </g>
+      </svg>
+    );
+  } else if (category === 'ara-sicaklar') {
+    scene = (
+      <svg className="guest-category-motion guest-category-motion-starter" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
+        <ellipse className="guest-category-motion-shadow" cx="75" cy="76" rx="42" ry="4" />
+        <path className="guest-category-starter-bowl" d="M34 54h82c-5 15-18 22-41 22S39 69 34 54z" />
+        <path className="guest-category-starter-rim" d="M31 53c17-5 71-5 88 0" fill="none" />
+        <rect className="guest-category-starter-piece guest-category-starter-piece-one" x="49" y="25" width="14" height="29" rx="6" />
+        <rect className="guest-category-starter-piece guest-category-starter-piece-two" x="69" y="15" width="14" height="34" rx="6" />
+        <rect className="guest-category-starter-piece guest-category-starter-piece-three" x="90" y="25" width="14" height="29" rx="6" />
+        <path className="guest-category-starter-steam guest-category-starter-steam-one" d="M57 22c-7-7 7-10 1-17" fill="none" />
+        <path className="guest-category-starter-steam guest-category-starter-steam-two" d="M96 22c7-7-7-10-1-17" fill="none" />
+      </svg>
+    );
+  } else if (category === 'tatli-meyve') {
+    scene = (
+      <svg className="guest-category-motion guest-category-motion-dessert" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
+        <ellipse className="guest-category-motion-shadow" cx="75" cy="76" rx="43" ry="4" />
+        <ellipse className="guest-category-dessert-plate" cx="75" cy="68" rx="43" ry="8" />
+        <path className="guest-category-dessert-cake" d="M47 60l33-37 26 37z" />
+        <path className="guest-category-dessert-cream" d="M53 52c12-6 28 4 46-1l7 9H47z" />
+        <path className="guest-category-dessert-layer" d="M58 46h36" fill="none" />
+        <g className="guest-category-dessert-fruit">
+          <circle cx="79" cy="24" r="7" />
+          <path d="M81 18c2-7 8-8 11-7" fill="none" />
+          <path d="M85 14c4-4 8-2 9 1-4 2-7 2-9-1z" />
+        </g>
+        <circle className="guest-category-dessert-spark guest-category-dessert-spark-one" cx="44" cy="27" r="2.5" />
+        <circle className="guest-category-dessert-spark guest-category-dessert-spark-two" cx="110" cy="31" r="2" />
+      </svg>
+    );
+  } else if (category === 'icecekler') {
+    scene = (
+      <svg className="guest-category-motion guest-category-motion-drink" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
+        <ellipse className="guest-category-motion-shadow" cx="75" cy="77" rx="32" ry="4" />
+        <path className="guest-category-drink-straw" d="M88 7l-9 22" fill="none" />
+        <path className="guest-category-drink-glass" d="M48 23h55l-7 52H55z" />
+        <path className="guest-category-drink-liquid" d="M53 44h45l-4 28H57z" />
+        <rect className="guest-category-drink-ice guest-category-drink-ice-one" x="60" y="29" width="13" height="13" rx="2" />
+        <rect className="guest-category-drink-ice guest-category-drink-ice-two" x="78" y="24" width="14" height="14" rx="2" />
+        <circle className="guest-category-drink-bubble guest-category-drink-bubble-one" cx="67" cy="61" r="2.5" />
+        <circle className="guest-category-drink-bubble guest-category-drink-bubble-two" cx="84" cy="66" r="2" />
+        <circle className="guest-category-drink-bubble guest-category-drink-bubble-three" cx="89" cy="53" r="1.7" />
+      </svg>
+    );
+  } else {
+    scene = (
+      <svg className="guest-category-motion guest-category-motion-breakfast" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
+        <ellipse className="guest-category-motion-shadow" cx="75" cy="77" rx="44" ry="4" />
+        <g className="guest-category-breakfast-sun">
+          <circle cx="105" cy="27" r="13" />
+          <path d="M105 6v7M105 41v7M84 27h7M119 27h7M90 12l5 5M115 37l5 5M120 12l-5 5" fill="none" />
+        </g>
+        <ellipse className="guest-category-breakfast-plate" cx="72" cy="64" rx="43" ry="12" />
+        <path className="guest-category-breakfast-egg" d="M45 62c-3-10 6-21 17-18 8-11 27-7 28 6 12 4 10 18-2 21-13 5-38 2-43-9z" />
+        <circle className="guest-category-breakfast-yolk" cx="69" cy="57" r="9" />
+        <path className="guest-category-breakfast-toast" d="M84 15c9-5 24-2 27 6l-5 31H82l-4-31c1-4 3-5 6-6z" />
+      </svg>
+    );
   }
 
-  if (category === 'ara-sicaklar') {
-    return <svg className="guest-category-motion guest-category-motion-starter" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
-      <ellipse className="guest-category-motion-shadow" cx="75" cy="76" rx="42" ry="4" />
-      <path className="guest-category-starter-bowl" d="M34 54h82c-5 15-18 22-41 22S39 69 34 54z" />
-      <path className="guest-category-starter-rim" d="M31 53c17-5 71-5 88 0" fill="none" />
-      <rect className="guest-category-starter-piece guest-category-starter-piece-one" x="49" y="25" width="14" height="29" rx="6" />
-      <rect className="guest-category-starter-piece guest-category-starter-piece-two" x="69" y="15" width="14" height="34" rx="6" />
-      <rect className="guest-category-starter-piece guest-category-starter-piece-three" x="90" y="25" width="14" height="29" rx="6" />
-      <path className="guest-category-starter-steam guest-category-starter-steam-one" d="M57 22c-7-7 7-10 1-17" fill="none" />
-      <path className="guest-category-starter-steam guest-category-starter-steam-two" d="M96 22c7-7-7-10-1-17" fill="none" />
-    </svg>;
-  }
+  return <span className="guest-heading-scene" data-category={category} aria-hidden="true">{scene}</span>;
+};
 
-  if (category === 'tatli-meyve') {
-    return <svg className="guest-category-motion guest-category-motion-dessert" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
-      <ellipse className="guest-category-motion-shadow" cx="75" cy="76" rx="43" ry="4" />
-      <ellipse className="guest-category-dessert-plate" cx="75" cy="68" rx="43" ry="8" />
-      <path className="guest-category-dessert-cake" d="M47 60l33-37 26 37z" />
-      <path className="guest-category-dessert-cream" d="M53 52c12-6 28 4 46-1l7 9H47z" />
-      <path className="guest-category-dessert-layer" d="M58 46h36" fill="none" />
-      <g className="guest-category-dessert-fruit">
-        <circle cx="79" cy="24" r="7" />
-        <path d="M81 18c2-7 8-8 11-7" fill="none" />
-        <path d="M85 14c4-4 8-2 9 1-4 2-7 2-9-1z" />
-      </g>
-      <circle className="guest-category-dessert-spark guest-category-dessert-spark-one" cx="44" cy="27" r="2.5" />
-      <circle className="guest-category-dessert-spark guest-category-dessert-spark-two" cx="110" cy="31" r="2" />
-    </svg>;
-  }
+const CategoryMotion = ({ category, eager = false }) => {
+  const source = publicAsset(CATEGORY_CUTOUTS[category] || CATEGORY_CUTOUTS.kahvaltilar);
+  const hasSteam = category === 'ara-sicaklar' || category === 'kahveler';
 
-  if (category === 'icecekler') {
-    return <svg className="guest-category-motion guest-category-motion-drink" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
-      <ellipse className="guest-category-motion-shadow" cx="75" cy="77" rx="32" ry="4" />
-      <path className="guest-category-drink-straw" d="M88 7l-9 22" fill="none" />
-      <path className="guest-category-drink-glass" d="M48 23h55l-7 52H55z" />
-      <path className="guest-category-drink-liquid" d="M53 44h45l-4 28H57z" />
-      <rect className="guest-category-drink-ice guest-category-drink-ice-one" x="60" y="29" width="13" height="13" rx="2" />
-      <rect className="guest-category-drink-ice guest-category-drink-ice-two" x="78" y="24" width="14" height="14" rx="2" />
-      <circle className="guest-category-drink-bubble guest-category-drink-bubble-one" cx="67" cy="61" r="2.5" />
-      <circle className="guest-category-drink-bubble guest-category-drink-bubble-two" cx="84" cy="66" r="2" />
-      <circle className="guest-category-drink-bubble guest-category-drink-bubble-three" cx="89" cy="53" r="1.7" />
-    </svg>;
-  }
+  return (
+    <span className="guest-category-premium-motion" data-category={category}>
+      <i className="guest-category-premium-aura" />
+      <i className="guest-category-premium-shadow" />
+      <img
+        src={source}
+        alt=""
+        decoding="async"
+        loading={eager ? 'eager' : 'lazy'}
+        draggable="false"
+        className="guest-category-premium-photo"
+      />
 
-  return <svg className="guest-category-motion guest-category-motion-breakfast" viewBox="0 0 150 86" aria-hidden="true" focusable="false">
-    <ellipse className="guest-category-motion-shadow" cx="75" cy="77" rx="44" ry="4" />
-    <g className="guest-category-breakfast-sun">
-      <circle cx="105" cy="27" r="13" />
-      <path d="M105 6v7M105 41v7M84 27h7M119 27h7M90 12l5 5M115 37l5 5M120 12l-5 5" fill="none" />
-    </g>
-    <ellipse className="guest-category-breakfast-plate" cx="72" cy="64" rx="43" ry="12" />
-    <path className="guest-category-breakfast-egg" d="M45 62c-3-10 6-21 17-18 8-11 27-7 28 6 12 4 10 18-2 21-13 5-38 2-43-9z" />
-    <circle className="guest-category-breakfast-yolk" cx="69" cy="57" r="9" />
-    <path className="guest-category-breakfast-toast" d="M84 15c9-5 24-2 27 6l-5 31H82l-4-31c1-4 3-5 6-6z" />
-  </svg>;
+      {hasSteam ? <span className="guest-category-premium-steam" aria-hidden="true">
+        <i />
+        <i />
+      </span> : null}
+
+      {category === 'tatli-meyve' ? <i className="guest-category-premium-shine" /> : null}
+
+      {category === 'icecekler' ? <span className="guest-category-premium-bubbles" aria-hidden="true">
+        <i />
+        <i />
+      </span> : null}
+    </span>
+  );
 };
 
 const getLocalizedMenuDictionary = (language) => menuTranslations[language] || menuTranslations.tr;
@@ -319,7 +364,33 @@ const classifyProduct = (product) => {
 
   return { parent: 'icecekler', child: null, label: 'İçecekler' };
 };
-const getCategoryTheme = (product) => CATEGORY_THEMES[classifyProduct(product).parent] || CATEGORY_THEMES.default;
+const MENU_CREAM_RGB = '252, 248, 240';
+const getCategoryTheme = (product) => {
+  const theme = CATEGORY_THEMES[classifyProduct(product).parent] || CATEGORY_THEMES.default;
+  return { ...theme, surfaceRgb: MENU_CREAM_RGB, altRgb: MENU_CREAM_RGB };
+};
+const CART_BURSTS = {
+  kahveler: { Icon: Coffee, mark: '☕' },
+  'ana-yemekler': { Icon: UtensilsCrossed, mark: '🍽️' },
+  'ara-sicaklar': { Icon: Flame, mark: '🔥' },
+  kahvaltilar: { Icon: EggFried, mark: '🍳' },
+  tatlilar: { Icon: CakeSlice, mark: '🍰' },
+  meyveler: { Icon: Apple, mark: '🍎' },
+  'tatli-meyve': { Icon: CakeSlice, mark: '🍰' },
+  icecekler: { Icon: CupSoda, mark: '🥤' },
+};
+const CartBurst = ({ category, subsection }) => {
+  const burst = CART_BURSTS[subsection] || CART_BURSTS[category] || CART_BURSTS.kahveler;
+  const BurstIcon = burst.Icon;
+  return (
+    <div className="guest-coffee-burst" data-category={subsection || category} aria-hidden="true">
+      <BurstIcon size={31} />
+      <i>✦</i>
+      <b>✦</b>
+      <em>{burst.mark}</em>
+    </div>
+  );
+};
 const Menu = () => {
   const navigate = useNavigate();
   const { t, language, locale } = useI18n();
@@ -330,7 +401,7 @@ const Menu = () => {
     if (providerValue !== scopedKey) return providerValue;
     const localValue = getNestedValue(localDictionary, scopedKey);
     if (typeof localValue === 'string') return interpolateValue(localValue, values);
-    return localValue ?? scopedKey;
+    return localValue ?? key;
   }, [localDictionary, t]);
   const translateCategory = useCallback((sectionId) => translateMenu(`categories.sections.${sectionId}.label`), [translateMenu]);
   const translateChildCategory = useCallback((childId) => translateMenu(`categories.children.${childId}.label`), [translateMenu]);
@@ -347,17 +418,19 @@ const Menu = () => {
   };
   const [session] = useState(() => getGuestSession());
   const [products, setProducts] = useState([]); const [cart, setCart] = useState(() => getGuestCart(getGuestSession()?.cartKey));
-  const [paymentMethod, setPaymentMethod] = useState('Nakit'); const [loading, setLoading] = useState(true); const [submitting, setSubmitting] = useState(false); const [cartOpen, setCartOpen] = useState(false); const [orderConfirmationOpen, setOrderConfirmationOpen] = useState(false); const [orderSuccessOpen, setOrderSuccessOpen] = useState(false); const [coffeeEffect, setCoffeeEffect] = useState(null); const [cartAttention, setCartAttention] = useState(false); const [activeParent, setActiveParent] = useState(null); const [activeChild, setActiveChild] = useState(null); const [categoryView, setCategoryView] = useState('parents');
+  const [paymentMethod, setPaymentMethod] = useState('Nakit'); const [loading, setLoading] = useState(true); const [submitting, setSubmitting] = useState(false); const [cartOpen, setCartOpen] = useState(false); const [orderConfirmationOpen, setOrderConfirmationOpen] = useState(false); const [orderSuccessOpen, setOrderSuccessOpen] = useState(false); const [cartBurst, setCartBurst] = useState(null); const [cartAttention, setCartAttention] = useState(false); const [dockSection, setDockSection] = useState(null); const [dockVisible, setDockVisible] = useState(false); const [categoryView, setCategoryView] = useState('parents'); const [bandParent, setBandParent] = useState(null); const [bandChild, setBandChild] = useState(null);
   const effectId = useRef(0);
+  const headerRef = useRef(null);
+  const dockRef = useRef(null);
   const categoryPanelRef = useRef(null);
   const productsStartRef = useRef(null);
   const leaveGuestMenu = useCallback((message) => { clearGuestSession(); if (message) toast.error(message); navigate('/', { replace: true }); }, [navigate]);
-  useEffect(() => { if (isGuestSessionExpired(session)) { leaveGuestMenu(translateMenu('errors.sessionExpired')); return undefined; } const fetchProducts = async () => { try { const { data } = await api.get('/products', withToken(session.token)); setProducts(data.map(applyDefaultCoffeeImage)); } catch (error) { if (error.response?.status === 401) { leaveGuestMenu(translateMenu('errors.sessionExpired')); return; } toast.error(translateMenu('errors.productsUnavailable')); } finally { setLoading(false); } }; void fetchProducts(); const expirationCheck = window.setInterval(() => { if (isGuestSessionExpired(session)) leaveGuestMenu(translateMenu('errors.sessionExpired')); }, 60_000); return () => window.clearInterval(expirationCheck); }, [session, leaveGuestMenu, translateMenu]);
+  useEffect(() => { if (isGuestSessionExpired(session)) { leaveGuestMenu(translateMenu('errors.sessionExpired')); return undefined; } const fetchProducts = async () => { try { const { data } = await api.get('/products', withToken(session.token)); setProducts(data); } catch (error) { if (error.response?.status === 401) { leaveGuestMenu(translateMenu('errors.sessionExpired')); return; } toast.error(translateMenu('errors.productsUnavailable')); } finally { setLoading(false); } }; void fetchProducts(); const expirationCheck = window.setInterval(() => { if (isGuestSessionExpired(session)) leaveGuestMenu(translateMenu('errors.sessionExpired')); }, 60_000); return () => window.clearInterval(expirationCheck); }, [session, leaveGuestMenu, translateMenu]);
   useEffect(() => { if (session?.cartKey) saveGuestCart(session.cartKey, cart); }, [cart, session]);
   const cartItems = useMemo(() => Object.values(cart), [cart]); const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0); const totalAmount = cartItems.reduce((total, item) => total + item.sellingPrice * item.quantity, 0);
   const localizedSections = useMemo(() => MENU_SECTIONS.map((section) => ({ ...section, label: translateCategory(section.id), description: translateMenu(`categories.sections.${section.id}.description`), children: section.children?.map((child) => ({ ...child, label: translateChildCategory(child.id), description: translateMenu(`categories.children.${child.id}.description`) })) })), [translateCategory, translateChildCategory, translateMenu]);
   const localizedSectionMap = useMemo(() => Object.fromEntries(localizedSections.map((section) => [section.id, section])), [localizedSections]);
-  const activeSection = activeParent ? localizedSectionMap[activeParent] : null;
+  const activeSection = bandParent ? localizedSectionMap[bandParent] : null;
   const visibleChildren = activeSection?.children || [];
   const categoryChoices = activeSection
     ? (visibleChildren.length ? visibleChildren : [{ id: 'all', label: translateMenu('categories.allInCategory', { label: activeSection.label }), description: translateMenu('categories.allInCategoryDescription') }])
@@ -365,38 +438,146 @@ const Menu = () => {
   const filteredProducts = useMemo(
     () => products.filter((product) => {
       const classification = classifyProduct(product);
-      if (!activeParent) return true;
-      if (classification.parent !== activeParent) return false;
-      if (!activeChild) return true;
-      return classification.child === activeChild;
+      if (!bandParent) return true;
+      if (classification.parent !== bandParent) return false;
+      if (!bandChild) return true;
+      return classification.child === bandChild;
     }),
-    [activeChild, activeParent, products]
+    [bandChild, bandParent, products]
   );
-  const activeCategoryLabel = activeChild ? visibleChildren.find((child) => child.id === activeChild)?.label || activeSection?.label : activeSection?.label || translateMenu('categories.fallbackLabel');
-  const showParentCategories = () => {
-    setCategoryView('parents');
-    setActiveParent(null);
-    setActiveChild(null);
-  };
-  const selectParentCategory = (sectionId) => {
-    setActiveParent(sectionId);
-    setActiveChild(null);
-    setCategoryView('children');
-  };
+  const activeCategoryLabel = bandChild
+    ? visibleChildren.find((child) => child.id === bandChild)?.label || activeSection?.label
+    : activeSection?.label || translateMenu('categories.fallbackLabel');
+  const isFiltering = Boolean(bandParent);
+  const productGroups = useMemo(
+    () => localizedSections
+      .map((section) => ({
+        ...section,
+        products: products.filter((product) => classifyProduct(product).parent === section.id)
+      }))
+      .filter((section) => section.products.length),
+    [localizedSections, products]
+  );
   const scrollToProducts = () => {
     window.requestAnimationFrame(() => {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       productsStartRef.current?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
     });
   };
+  const showParentCategories = () => {
+    setCategoryView('parents');
+    setBandParent(null);
+    setBandChild(null);
+  };
+  const selectParentCategory = (sectionId) => {
+    setBandParent(sectionId);
+    setBandChild(null);
+    setCategoryView('children');
+  };
   const selectCategoryChoice = (choiceId) => {
-    setActiveChild(choiceId === 'all' ? null : choiceId);
+    setBandChild(choiceId === 'all' ? null : choiceId);
     scrollToProducts();
   };
-  const celebrateCoffee = (productId) => { effectId.current += 1; setCoffeeEffect({ productId, id: effectId.current }); setCartAttention(true); window.setTimeout(() => setCoffeeEffect(null), 900); window.setTimeout(() => setCartAttention(false), 750); };
-  const updateCart = (product, difference) => { if (difference > 0) celebrateCoffee(product._id); setCart((currentCart) => { const quantity = (currentCart[product._id]?.quantity || 0) + difference; if (quantity <= 0) { const nextCart = { ...currentCart }; delete nextCart[product._id]; return nextCart; } return { ...currentCart, [product._id]: { ...product, quantity } }; }); };
+  const scrollToMenuSection = useCallback((sectionId) => {
+    setDockSection(sectionId);
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const scroll = () => {
+      document.getElementById(`menu-section-${sectionId}`)?.scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start'
+      });
+    };
+    if (bandParent) {
+      setCategoryView('parents');
+      setBandParent(null);
+      setBandChild(null);
+      window.requestAnimationFrame(() => window.requestAnimationFrame(scroll));
+      return;
+    }
+    scroll();
+  }, [bandParent]);
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return undefined;
+    const update = () => {
+      document.documentElement.style.setProperty('--guest-header-height', `${header.offsetHeight}px`);
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, [loading]);
+  useEffect(() => {
+    const dock = dockRef.current;
+    document.documentElement.style.setProperty('--guest-dock-height', dockVisible && dock ? `${dock.offsetHeight}px` : '0px');
+  }, [dockVisible, language, loading]);
+  useEffect(() => {
+    const panel = categoryPanelRef.current;
+    const header = headerRef.current;
+    if (!panel) return undefined;
+    const updateDock = () => {
+      const headerHeight = header?.offsetHeight || 88;
+      setDockVisible(panel.getBoundingClientRect().bottom <= headerHeight + 8);
+    };
+    updateDock();
+    window.addEventListener('scroll', updateDock, { passive: true });
+    window.addEventListener('resize', updateDock);
+    return () => {
+      window.removeEventListener('scroll', updateDock);
+      window.removeEventListener('resize', updateDock);
+    };
+  }, [loading]);
+  useEffect(() => {
+    if (isFiltering) return undefined;
+    const nodes = [...document.querySelectorAll('[data-menu-section]')];
+    if (!nodes.length) return undefined;
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((left, right) => left.boundingClientRect.top - right.boundingClientRect.top);
+      if (visible[0]) setDockSection(visible[0].target.getAttribute('data-menu-section'));
+    }, { rootMargin: '-42% 0px -48% 0px', threshold: 0 });
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, [productGroups, loading, isFiltering]);
+  useEffect(() => {
+    const headings = [...document.querySelectorAll('.guest-product-group-heading')];
+    if (!headings.length) return undefined;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      headings.forEach((heading) => heading.classList.add('is-revealed'));
+      return undefined;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.35, rootMargin: '0px 0px -8% 0px' });
+    headings.forEach((heading) => observer.observe(heading));
+    return () => observer.disconnect();
+  }, [productGroups, loading, isFiltering, language]);
+  const celebrateAdd = (productId) => { effectId.current += 1; setCartBurst({ productId, id: effectId.current }); setCartAttention(true); window.setTimeout(() => setCartBurst(null), 900); window.setTimeout(() => setCartAttention(false), 750); };
+  const updateCart = (product, difference) => { if (difference > 0) celebrateAdd(product._id); setCart((currentCart) => { const quantity = (currentCart[product._id]?.quantity || 0) + difference; if (quantity <= 0) { const nextCart = { ...currentCart }; delete nextCart[product._id]; return nextCart; } return { ...currentCart, [product._id]: { ...product, quantity } }; }); };
   const requestOrderConfirmation = () => { if (!cartItems.length || submitting) return; setOrderConfirmationOpen(true); };
   const completeOrder = async () => { if (!cartItems.length) return; setSubmitting(true); try { await api.post('/orders', { paymentMethod, items: cartItems.map((item) => ({ productId: item._id, quantity: item.quantity })) }, withToken(session.token)); setCart({}); setCartOpen(false); setOrderConfirmationOpen(false); setOrderSuccessOpen(true); } catch (error) { if (error.response?.status === 401) { leaveGuestMenu(translateMenu('errors.sessionExpired')); return; } toast.error(error.response?.data?.message || translateMenu('errors.orderFailed')); } finally { setSubmitting(false); } };
+  const renderProductCard = (product, index) => {
+    const detail = getProductDetail(product, translateMenu, language);
+    const theme = getCategoryTheme(product);
+    const classification = classifyProduct(product);
+    const localizedClassificationLabel = classification.child ? translateChildCategory(classification.child) : translateCategory(classification.parent);
+    const localizedProductName = getLocalizedProductName(product, translateMenu, language);
+    const showCoffeeIntensity = classification.parent === 'kahveler';
+    const traitLabels = showCoffeeIntensity ? getTraitLabels('kahveler') : [];
+    const productImage = resolveProductImageUrl(product.imageUrl) || PRODUCT_FALLBACK_IMAGE;
+    const productMotionCutout = resolveProductMotionCutout(productImage);
+    const productMotionKey = resolveProductMotionKey(productImage);
+    return <article className={`guest-product-card ${cart[product._id] ? 'in-cart' : ''}`} data-product-name={getProductSourceName(product).toLowerCase()} data-product-motion={productMotionCutout ? productMotionKey : undefined} data-category={classification.parent} style={{ '--card-index': index, '--product-surface': theme.surfaceRgb, '--product-surface-alt': theme.altRgb, '--product-accent': theme.accent, '--product-accent-soft': theme.accentSoft, '--product-strong': theme.strong, '--product-line': theme.line, '--product-button-bg': theme.buttonBg, '--product-button-hover': theme.buttonHover, '--product-button-text': theme.buttonText, '--product-button-border': theme.buttonBorder }} key={product._id}>
+      <ProductVisual key={`${product._id}:${productImage}:${bandParent || 'all'}:${bandChild || 'all'}:${language}`} imageSrc={productImage} cutoutSrc={productMotionCutout} alt={localizedProductName} eager={index < 2}>{cartBurst?.productId === product._id && <CartBurst key={cartBurst.id} category={classification.parent} subsection={classification.child} />}</ProductVisual>
+      <div className="guest-product-body"><p className="guest-product-kicker">{localizedClassificationLabel.toLocaleUpperCase(locale)}</p><h3>{localizedProductName}</h3><p className="guest-product-description">{detail.description}</p>{showCoffeeIntensity && <div className="guest-product-intensity"><span>{getTraitMetric('kahveler')}</span><div>{[1, 2, 3, 4, 5].map((level) => <i className={level <= detail.intensity ? 'active' : ''} key={level} />)}</div><strong>{traitLabels[detail.intensity - 1]}</strong></div>}<div className="guest-product-bottom"><strong>{formatMoney(product.sellingPrice, locale)}</strong>{cart[product._id] ? <div className="guest-quantity-control" aria-label={translateMenu('cart.quantityAria', { name: localizedProductName })}><button type="button" onClick={() => updateCart(product, -1)} aria-label={translateMenu('productCard.decreaseAria')}><Minus size={15} /></button><span>{cart[product._id].quantity}</span><button type="button" onClick={() => updateCart(product, 1)} aria-label={translateMenu('productCard.increaseAria')}><Plus size={15} /></button></div> : <button type="button" className="guest-add-button" onClick={() => updateCart(product, 1)} aria-label={translateMenu('productCard.addAria', { name: localizedProductName })}><Plus className="guest-add-icon" size={16} aria-hidden="true" /><span className="guest-add-label">{translateMenu('productCard.add')}</span></button>}</div></div>
+    </article>;
+  };
   if (loading) return <div className="guest-menu-loading" aria-label={translateMenu('products.loadingAria')}><span /><small className="sr-only">{translateMenu('products.loadingText')}</small></div>;
 
   const [heroTitleLineOne, heroTitleLineTwo] = splitTextLines(translateMenu('hero.title'));
@@ -404,11 +585,11 @@ const Menu = () => {
   const paymentMethodLabel = paymentMethod === 'Nakit' ? translateMenu('cart.paymentCash') : translateMenu('cart.paymentCard');
 
   return <main className="guest-menu-page" dir={language === 'ar' ? 'rtl' : undefined}>
-    <header className="guest-menu-header">
+    <header className="guest-menu-header" ref={headerRef}>
       <div className="guest-menu-header-inner">
         <div className="guest-menu-brand">
           <div className="guest-menu-brand-copy" aria-label={translateMenu('header.brandAria')}>
-            <img src="/park-dedeman-header-logo.png" alt={translateMenu('header.brandAria')} className="guest-menu-brand-mark" />
+              <img src={publicAsset('park-dedeman-header-lockup.webp')} alt={translateMenu('header.brandAria')} className="guest-menu-brand-mark" />
           </div>
         </div>
 
@@ -428,29 +609,40 @@ const Menu = () => {
         </div>
       </div>
     </header>
+    <nav ref={dockRef} className={`guest-menu-dock-cats${dockVisible ? ' is-visible' : ''}`} aria-label={translateMenu('categories.dockAria')} aria-hidden={!dockVisible} inert={!dockVisible || undefined}>
+      <div className="guest-menu-dock-cats-inner">
+        {localizedSections.map((section) => (
+          <button type="button" key={section.id} className={`guest-menu-dock-cat${dockSection === section.id ? ' is-active' : ''}`} onClick={() => scrollToMenuSection(section.id)}>
+            {section.label}
+          </button>
+        ))}
+      </div>
+    </nav>
     <section className="guest-menu-hero"><img src={HOTEL_HERO_IMAGE} alt={translateMenu('hero.alt')} /><div className="guest-menu-hero-overlay" /><div className="guest-menu-hero-content"><p>{translateMenu('hero.eyebrow')}</p><h1>{heroTitleLineOne}<br />{heroTitleLineTwo}</h1><span>{translateMenu('hero.body')}</span></div></section>
     <section ref={categoryPanelRef} className={`guest-menu-category-band ${categoryView === 'children' ? 'child-view' : 'parent-view'}`} aria-label={translateMenu('categories.panelAria')}>
       <div className="guest-menu-category-band-inner">
         <div id="guest-menu-category-stage" className="guest-menu-category-stage" aria-live="polite" aria-label={translateMenu('categories.stageLabel')}>
           {categoryView === 'parents' ? <div className="guest-menu-category-screen guest-menu-parent-screen" key="parent-categories">
             <div className="guest-menu-category-intro">
-              <p>{translateMenu('categories.intro')}</p>
+              <h2>{translateMenu('categories.intro')}</h2>
             </div>
             <nav className="guest-menu-tabs" aria-label={translateMenu('categories.parentNav')}>
               {localizedSections.map((section, index) => <div key={section.id} className="guest-menu-tab-item" data-category={section.id} style={{ '--category-index': index }}>
-                <span className="guest-menu-tab-scene" aria-hidden="true"><CategoryMotion category={section.id} /></span>
-                <button type="button" className="guest-menu-tab" onClick={() => selectParentCategory(section.id)}>
+                <button type="button" className="guest-menu-tab-scene-button" onClick={() => selectParentCategory(section.id)} aria-label={section.label}>
+                  <span className="guest-menu-tab-scene" aria-hidden="true"><CategoryMotion category={section.id} eager={index < 2} /></span>
+                </button>
+                <button type="button" className={`guest-menu-tab${bandParent === section.id ? ' active' : ''}`} onClick={() => selectParentCategory(section.id)}>
                   <span className="guest-menu-tab-copy"><strong>{section.label}</strong></span>
                 </button>
               </div>)}
             </nav>
-          </div> : <div className="guest-menu-category-screen guest-menu-child-screen" key={activeParent}>
+          </div> : <div className="guest-menu-category-screen guest-menu-child-screen" key={bandParent}>
             <button type="button" className="guest-menu-category-back" onClick={showParentCategories}><ChevronLeft size={17} aria-hidden="true" /> {translateMenu('categories.back')}</button>
             <div className="guest-menu-category-intro">
-              <p>{activeSection?.label?.toUpperCase()}</p>
+              <h2>{activeSection?.label}</h2>
             </div>
             <nav className="guest-menu-subtabs" aria-label={translateMenu('categories.childrenNav', { label: activeSection?.label || translateMenu('categories.fallbackLabel') })}>
-              {categoryChoices.map((choice, index) => <button type="button" key={choice.id} className={`guest-menu-subtab ${(choice.id === 'all' ? !activeChild : activeChild === choice.id) ? 'active' : ''}`} style={{ '--category-index': index }} onClick={() => selectCategoryChoice(choice.id)}>
+              {categoryChoices.map((choice, index) => <button type="button" key={choice.id} className={`guest-menu-subtab ${(choice.id === 'all' ? !bandChild : bandChild === choice.id) ? 'active' : ''}`} style={{ '--category-index': index }} onClick={() => selectCategoryChoice(choice.id)}>
                 <span><strong>{choice.label}</strong></span>
               </button>)}
             </nav>
@@ -459,25 +651,38 @@ const Menu = () => {
       </div>
     </section>
     <div className="guest-menu-layout">
-      <section ref={productsStartRef} className="guest-products-section" aria-labelledby="products-title" tabIndex="-1">
-        <div className="guest-products-heading"><div><p>{translateMenu('products.sectionEyebrow')}</p><h2 id="products-title">{translateMenu('products.heading', { category: activeCategoryLabel })}</h2><span>{translateMenu('products.description')}</span></div></div>
-        {filteredProducts.length ? <>
-          <div className="guest-products-grid" key={`${activeParent}-${activeChild || 'all'}`}>{filteredProducts.map((product, index) => {
-          const detail = getProductDetail(product, translateMenu, language);
-          const theme = getCategoryTheme(product);
-          const classification = classifyProduct(product);
-          const localizedClassificationLabel = classification.child ? translateChildCategory(classification.child) : translateCategory(classification.parent);
-          const localizedProductName = getLocalizedProductName(product, translateMenu, language);
-          const traitLabels = getTraitLabels(classification.parent);
-          const productImage = resolveProductImageUrl(product.imageUrl) || PRODUCT_FALLBACK_IMAGE;
-          return <article className={`guest-product-card ${cart[product._id] ? 'in-cart' : ''}`} data-product-name={getProductSourceName(product).toLowerCase()} data-category={classification.parent} style={{ '--card-index': index, '--product-surface': theme.surfaceRgb, '--product-surface-alt': theme.altRgb, '--product-accent': theme.accent, '--product-accent-soft': theme.accentSoft, '--product-strong': theme.strong, '--product-line': theme.line, '--product-button-bg': theme.buttonBg, '--product-button-hover': theme.buttonHover, '--product-button-text': theme.buttonText, '--product-button-border': theme.buttonBorder }} key={product._id}>
-            <div className="guest-product-image"><img src={productImage} alt={localizedProductName} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = PRODUCT_FALLBACK_IMAGE; }} />{coffeeEffect?.productId === product._id && <div className="guest-coffee-burst" key={coffeeEffect.id} aria-hidden="true"><Coffee size={31} /><i>✦</i><b>✦</b><em>☕</em></div>}</div>
-            <div className="guest-product-body"><p className="guest-product-kicker">{localizedClassificationLabel.toLocaleUpperCase(locale)}</p><h3>{localizedProductName}</h3><p className="guest-product-description">{detail.description}</p><div className="guest-product-intensity"><span>{getTraitMetric(classification.parent)}</span><div>{[1, 2, 3, 4, 5].map((level) => <i className={level <= detail.intensity ? 'active' : ''} key={level} />)}</div><strong>{traitLabels[detail.intensity - 1]}</strong></div><div className="guest-product-bottom"><strong>{formatMoney(product.sellingPrice, locale)}</strong>{cart[product._id] ? <div className="guest-quantity-control" aria-label={translateMenu('cart.quantityAria', { name: localizedProductName })}><button type="button" onClick={() => updateCart(product, -1)} aria-label={translateMenu('productCard.decreaseAria')}><Minus size={15} /></button><span>{cart[product._id].quantity}</span><button type="button" onClick={() => updateCart(product, 1)} aria-label={translateMenu('productCard.increaseAria')}><Plus size={15} /></button></div> : <button type="button" className="guest-add-button" onClick={() => updateCart(product, 1)} aria-label={translateMenu('productCard.addAria', { name: localizedProductName })}><Plus className="guest-add-icon" size={16} aria-hidden="true" /><span className="guest-add-label">{translateMenu('productCard.add')}</span></button>}</div></div>
-          </article>;
-        })}</div>
-        </> : <div className="guest-products-empty"><ShoppingBag size={30} /><h3>{translateMenu('products.emptyTitle')}</h3><p>{translateMenu('products.emptyBody', { category: activeCategoryLabel })}</p></div>}
+      <section ref={productsStartRef} className="guest-products-section" aria-label={translateMenu('categories.fallbackLabel')} tabIndex="-1">
+        {isFiltering ? <>
+          <div className="guest-products-heading guest-product-group-heading"><div><ProductGroupScene category={bandParent} /><h2 id="products-title">{activeCategoryLabel}</h2><b className="guest-product-group-rule" aria-hidden="true" /></div></div>
+          {filteredProducts.length
+            ? <div className="guest-products-grid" key={`${bandParent}-${bandChild || 'all'}`}>{filteredProducts.map(renderProductCard)}</div>
+            : <div className="guest-products-empty"><ShoppingBag size={30} /><h3>{translateMenu('products.emptyTitle')}</h3><p>{translateMenu('products.emptyBody', { category: activeCategoryLabel })}</p></div>}
+        </> : productGroups.length ? productGroups.map((group) => (
+          <section key={group.id} id={`menu-section-${group.id}`} className="guest-product-group" data-menu-section={group.id} aria-labelledby={`products-title-${group.id}`}>
+            <div className="guest-products-heading guest-product-group-heading">
+              <div>
+                <ProductGroupScene category={group.id} />
+                <h2 id={`products-title-${group.id}`}>{group.label}</h2>
+                <b className="guest-product-group-rule" aria-hidden="true" />
+              </div>
+            </div>
+            <div className="guest-products-grid">{group.products.map(renderProductCard)}</div>
+          </section>
+        )) : <div className="guest-products-empty"><ShoppingBag size={30} /><h3>{translateMenu('products.emptyTitle')}</h3><p>{translateMenu('products.emptyBody', { category: translateMenu('categories.fallbackLabel') })}</p></div>}
       </section>
     </div>
+    <footer className="guest-menu-footer">
+      <div className="guest-menu-footer-inner">
+        <p className="guest-menu-footer-kicker">{translateMenu('footer.kicker')}</p>
+        <strong className="guest-menu-footer-title">{translateMenu('footer.title')}</strong>
+        <p className="guest-menu-footer-body">{translateMenu('footer.body')}</p>
+        <div className="guest-menu-footer-meta">
+          <span>{translateMenu('footer.hours')}</span>
+          <i />
+          <span>{translateMenu('footer.location')}</span>
+        </div>
+      </div>
+    </footer>
     <button type="button" className={`guest-cart-inline-trigger ${cartAttention ? 'guest-cart-trigger-attention' : ''}`} onClick={() => setCartOpen(true)} aria-label={totalQuantity ? translateMenu('cart.openWithCountAria', { count: totalQuantity }) : translateMenu('cart.openAria')}><span className="guest-cart-trigger-shell" aria-hidden="true"><ShoppingCart size={20} />{cartAttention ? <i className="guest-cart-trigger-pulse" /> : null}</span><span className="guest-cart-trigger-copy"><small>{translateMenu('cart.title')}</small><strong>{totalQuantity ? translateMenu('cart.itemCount', { count: totalQuantity }) : translateMenu('cart.empty')}</strong></span>{totalQuantity > 0 && <b>{totalQuantity}</b>}</button>
     {/* eslint-disable-next-line react-hooks/refs */}
     {cartOpen && <div className="guest-cart-backdrop" onClick={() => setCartOpen(false)}><aside className="guest-cart guest-cart-drawer" aria-label={translateMenu('cart.drawerTitle')} role="dialog" aria-modal="true" aria-labelledby="guest-cart-title" onClick={(event) => event.stopPropagation()}><div className="guest-cart-heading"><div><h2 id="guest-cart-title">{translateMenu('cart.drawerTitle')}</h2><p>{translateMenu('cart.drawerSubtitle')}</p></div><button type="button" className="guest-cart-close" onClick={() => setCartOpen(false)} aria-label={translateMenu('cart.closeAria')}><X size={19} /></button></div><div className="guest-cart-items">{cartItems.length ? cartItems.map((item) => { const localizedItemName = getLocalizedProductName(item, translateMenu, language); return <div className="guest-cart-item" key={item._id}><img src={resolveProductImageUrl(item.imageUrl) || PRODUCT_FALLBACK_IMAGE} alt="" /><div className="guest-cart-item-copy"><strong>{localizedItemName}</strong><span>{translateMenu('cart.perItem', { price: formatMoney(item.sellingPrice, locale) })}</span></div><div className="guest-cart-item-actions"><b aria-label={translateMenu('cart.lineTotalAria', { name: localizedItemName })}>{formatMoney(item.sellingPrice * item.quantity, locale)}</b><div className="guest-cart-quantity-control"><button type="button" onClick={() => updateCart(item, -1)} aria-label={translateMenu('cart.decreaseAria', { name: localizedItemName })}><Minus size={14} /></button><span>{item.quantity}</span><button type="button" onClick={() => updateCart(item, 1)} aria-label={translateMenu('cart.increaseAria', { name: localizedItemName })}><Plus size={14} /></button></div></div></div>; }) : <p className="guest-cart-empty">{emptyCartLineOne}<br />{emptyCartLineTwo}</p>}</div><div className="guest-cart-footer"><div className="guest-payment-methods"><p>{translateMenu('cart.paymentTitle')}</p><div><button type="button" className={paymentMethod === 'Nakit' ? 'active' : ''} onClick={() => setPaymentMethod('Nakit')}><WalletCards size={17} />{translateMenu('cart.paymentCash')}</button><button type="button" className={paymentMethod === 'Kredi Kartı' ? 'active' : ''} onClick={() => setPaymentMethod('Kredi Kartı')}><CreditCard size={17} />{translateMenu('cart.paymentCard')}</button></div></div><div className="guest-cart-total"><span>{translateMenu('cart.total')}</span><strong>{formatMoney(totalAmount, locale)}</strong></div><button type="button" className="guest-checkout-button" disabled={!totalQuantity || submitting} onClick={requestOrderConfirmation}>{submitting ? translateMenu('cart.checkoutPending') : translateMenu('cart.checkout')}</button></div></aside></div>}

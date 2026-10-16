@@ -1,0 +1,64 @@
+/* Bütün ürünlerde taş masa sabittir; yalnızca ürün katmanı hareket eder. */
+.guest-product-card .guest-product-image.guest-product-visual {
+  isolation: isolate;
+  background: #eee6dc;
+}
+
+.guest-product-card .guest-product-image.guest-product-visual > .guest-product-visual-background {
+  position: absolute !important;
+  inset: 0;
+  z-index: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+.guest-product-card .guest-product-image.guest-product-visual > .guest-product-visual-layer {
+  position: absolute !important;
+  inset: 0;
+  z-index: 1;
+  width: 100% !important;
+  height: 100% !important;
+  object-position: center !important;
+  object-fit: cover !important;
+  transition: none;
+  backface-visibility: hidden;
+  opacity: 1;
+  transform: translate3d(0, var(--product-motion-shift-y, 0%), 0) scale(var(--product-motion-scale, .9));
+}
+
+/* Cihazdan eklenen fotoğraflar da aynı zemin üzerinde, tam kadrajla kayar. */
+.guest-product-card .guest-product-image.guest-product-visual[data-product-cutout="false"] > .guest-product-visual-layer {
+  object-fit: contain !important;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 55%, #000 42%, transparent 75%);
+  mask-image: radial-gradient(ellipse at 50% 55%, #000 42%, transparent 75%);
+}
+
+.guest-product-card .guest-product-image.guest-product-visual[data-reveal-state="waiting"] > .guest-product-visual-layer {
+  opacity: 0;
+  transform: translate3d(110%, var(--product-motion-shift-y, 0%), 0) scale(var(--product-motion-scale, .9));
+}
+
+.guest-product-card .guest-product-image.guest-product-visual[data-reveal-state="entering"] > .guest-product-visual-layer {
+  animation: guest-product-visual-enter 2s cubic-bezier(.22, .08, .18, 1) both;
+  will-change: transform, opacity;
+}
+
+@keyframes guest-product-visual-enter {
+  from { opacity: 0; transform: translate3d(110%, var(--product-motion-shift-y, 0%), 0) scale(var(--product-motion-scale, .9)); }
+  14% { opacity: 1; }
+  to { opacity: 1; transform: translate3d(0, var(--product-motion-shift-y, 0%), 0) scale(var(--product-motion-scale, .9)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guest-product-card .guest-product-image.guest-product-visual > .guest-product-visual-layer {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translate3d(0, var(--product-motion-shift-y, 0%), 0) scale(var(--product-motion-scale, .9)) !important;
+  }
+}

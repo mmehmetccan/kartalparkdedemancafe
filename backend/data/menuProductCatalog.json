@@ -1,0 +1,543 @@
+[
+  {
+    "slug": "klasik-cheeseburger",
+    "name": "Klasik Cheeseburger",
+    "menuSection": "ana-yemekler",
+    "menuSubsection": null,
+    "description": "Izgara dana köftesi, cheddar peyniri, marul ve domatesle hazırlanan klasik hamburger.",
+    "intensity": 3,
+    "sellingPrice": 450,
+    "costPrice": 160,
+    "imageUrl": "menu-products/klasik-cheeseburger.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Classic Cheeseburger",
+        "description": "Grilled beef patty with cheddar, lettuce and tomato in a sesame bun."
+      },
+      "de": {
+        "name": "Klassischer Cheeseburger",
+        "description": "Gegrilltes Rindfleischpatty mit Cheddar, Salat und Tomate im Sesambrötchen."
+      },
+      "ar": {
+        "name": "تشيز برغر كلاسيكي",
+        "description": "برغر لحم بقري مشوي مع جبن شيدر وخس وطماطم في خبز بالسمسم."
+      },
+      "ru": {
+        "name": "Классический чизбургер",
+        "description": "Говяжья котлета на гриле с чеддером, салатом и томатом в булочке с кунжутом."
+      }
+    }
+  },
+  {
+    "slug": "izgara-tavuk",
+    "name": "Izgara Tavuk",
+    "menuSection": "ana-yemekler",
+    "menuSubsection": null,
+    "description": "Izgara tavuk göğsü, kabak, havuç ve kırmızı biberle servis edilir.",
+    "intensity": 3,
+    "sellingPrice": 390,
+    "costPrice": 145,
+    "imageUrl": "menu-products/izgara-tavuk.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Grilled Chicken",
+        "description": "Grilled chicken breast served with zucchini, carrot and red pepper."
+      },
+      "de": {
+        "name": "Gegrilltes Hähnchen",
+        "description": "Gegrillte Hähnchenbrust mit Zucchini, Karotte und roter Paprika."
+      },
+      "ar": {
+        "name": "دجاج مشوي",
+        "description": "صدر دجاج مشوي يُقدّم مع الكوسا والجزر والفلفل الأحمر."
+      },
+      "ru": {
+        "name": "Курица на гриле",
+        "description": "Куриная грудка на гриле с кабачком, морковью и красным перцем."
+      }
+    }
+  },
+  {
+    "slug": "peynirli-omlet",
+    "name": "Peynirli Omlet",
+    "menuSection": "kahvaltilar",
+    "menuSubsection": "omletler",
+    "description": "Eriyen peynirle hazırlanan omlet; domates ve taze yeşilliklerle servis edilir.",
+    "intensity": 3,
+    "sellingPrice": 230,
+    "costPrice": 65,
+    "imageUrl": "menu-products/peynirli-omlet.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Cheese Omelet",
+        "description": "A folded cheese omelet served with tomatoes and fresh greens."
+      },
+      "de": {
+        "name": "Käseomelett",
+        "description": "Omelett mit geschmolzenem Käse, Tomaten und frischem Salat."
+      },
+      "ar": {
+        "name": "عجة بالجبن",
+        "description": "عجة بالجبن الذائب تُقدّم مع الطماطم والخضار الطازجة."
+      },
+      "ru": {
+        "name": "Омлет с сыром",
+        "description": "Омлет с расплавленным сыром, томатами и свежей зеленью."
+      }
+    }
+  },
+  {
+    "slug": "sebzeli-omlet",
+    "name": "Sebzeli Omlet",
+    "menuSection": "kahvaltilar",
+    "menuSubsection": "omletler",
+    "description": "Biber ve mantarla hazırlanan omlet; domates ve taze yeşilliklerle servis edilir.",
+    "intensity": 3,
+    "sellingPrice": 225,
+    "costPrice": 55,
+    "imageUrl": "menu-products/sebzeli-omlet.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Vegetable Omelet",
+        "description": "Pepper and mushroom omelet served with tomatoes and fresh greens."
+      },
+      "de": {
+        "name": "Gemüseomelett",
+        "description": "Omelett mit Paprika und Pilzen, dazu Tomaten und frischer Salat."
+      },
+      "ar": {
+        "name": "عجة بالخضار",
+        "description": "عجة بالفلفل والفطر تُقدّم مع الطماطم والخضار الطازجة."
+      },
+      "ru": {
+        "name": "Овощной омлет",
+        "description": "Омлет с перцем и грибами, томатами и свежей зеленью."
+      }
+    }
+  },
+  {
+    "slug": "sigara-boregi",
+    "name": "Sigara Böreği",
+    "menuSection": "ara-sicaklar",
+    "menuSubsection": null,
+    "description": "Beyaz peynir ve maydanoz dolgulu, çıtır kızarmış börek ruloları.",
+    "intensity": 3,
+    "sellingPrice": 190,
+    "costPrice": 50,
+    "imageUrl": "menu-products/sigara-boregi.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Cheese Pastry Rolls",
+        "description": "Crisp fried pastry rolls filled with white cheese and parsley."
+      },
+      "de": {
+        "name": "Knusprige Käseröllchen",
+        "description": "Knusprig frittierte Teigröllchen mit Weißkäse und Petersilie."
+      },
+      "ar": {
+        "name": "لفائف البوريك بالجبن",
+        "description": "لفائف عجين مقلية ومقرمشة محشوة بالجبن الأبيض والبقدونس."
+      },
+      "ru": {
+        "name": "Сырные рулетики бёрек",
+        "description": "Хрустящие жареные рулетики с белым сыром и петрушкой."
+      }
+    }
+  },
+  {
+    "slug": "patates-kizartmasi",
+    "name": "Patates Kızartması",
+    "menuSection": "ara-sicaklar",
+    "menuSubsection": null,
+    "description": "Dışı çıtır, içi yumuşak, hafif tuzlu klasik patates kızartması.",
+    "intensity": 3,
+    "sellingPrice": 140,
+    "costPrice": 35,
+    "imageUrl": "menu-products/patates-kizartmasi.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "French Fries",
+        "description": "Classic lightly salted fries, crisp outside and soft inside."
+      },
+      "de": {
+        "name": "Pommes frites",
+        "description": "Klassische, leicht gesalzene Pommes: außen knusprig, innen weich."
+      },
+      "ar": {
+        "name": "بطاطس مقلية",
+        "description": "بطاطس مقلية كلاسيكية مقرمشة من الخارج وطرية من الداخل مع ملح خفيف."
+      },
+      "ru": {
+        "name": "Картофель фри",
+        "description": "Классический слегка подсоленный картофель фри: хрустящий снаружи и мягкий внутри."
+      }
+    }
+  },
+  {
+    "slug": "ev-yapimi-limonata",
+    "name": "Ev Yapımı Limonata",
+    "menuSection": "icecekler",
+    "menuSubsection": null,
+    "description": "Limon, buz ve taze nane ile ferahlatıcı limonata.",
+    "intensity": 3,
+    "sellingPrice": 120,
+    "costPrice": 25,
+    "imageUrl": "menu-products/ev-yapimi-limonata.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Homemade Lemonade",
+        "description": "Refreshing lemonade served with ice, lemon and fresh mint."
+      },
+      "de": {
+        "name": "Hausgemachte Limonade",
+        "description": "Erfrischende Limonade mit Eis, Zitrone und frischer Minze."
+      },
+      "ar": {
+        "name": "ليمونادة منزلية",
+        "description": "ليمونادة منعشة مع الثلج والليمون والنعناع الطازج."
+      },
+      "ru": {
+        "name": "Домашний лимонад",
+        "description": "Освежающий лимонад со льдом, лимоном и свежей мятой."
+      }
+    }
+  },
+  {
+    "slug": "taze-portakal-suyu",
+    "name": "Taze Portakal Suyu",
+    "menuSection": "icecekler",
+    "menuSubsection": null,
+    "description": "Taze sıkılmış portakalların doğal, ferahlatıcı lezzeti.",
+    "intensity": 3,
+    "sellingPrice": 145,
+    "costPrice": 45,
+    "imageUrl": "menu-products/taze-portakal-suyu.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Fresh Orange Juice",
+        "description": "The naturally refreshing flavor of freshly squeezed oranges."
+      },
+      "de": {
+        "name": "Frischer Orangensaft",
+        "description": "Natürlich erfrischender Geschmack frisch gepresster Orangen."
+      },
+      "ar": {
+        "name": "عصير برتقال طازج",
+        "description": "مذاق طبيعي ومنعش من البرتقال المعصور حديثاً."
+      },
+      "ru": {
+        "name": "Свежий апельсиновый сок",
+        "description": "Натуральный освежающий вкус свежевыжатых апельсинов."
+      }
+    }
+  },
+  {
+    "slug": "frambuazli-cheesecake",
+    "name": "Frambuazlı Cheesecake",
+    "menuSection": "tatli-meyve",
+    "menuSubsection": "tatlilar",
+    "description": "Bisküvi tabanı, kremsi peynir dolgusu ve frambuaz sosuyla cheesecake.",
+    "intensity": 3,
+    "sellingPrice": 230,
+    "costPrice": 85,
+    "imageUrl": "menu-products/frambuazli-cheesecake.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Raspberry Cheesecake",
+        "description": "Creamy cheesecake with a biscuit base and raspberry topping."
+      },
+      "de": {
+        "name": "Himbeer-Cheesecake",
+        "description": "Cremiger Cheesecake mit Keksboden und Himbeertopping."
+      },
+      "ar": {
+        "name": "تشيز كيك بالتوت الأحمر",
+        "description": "تشيز كيك كريمي بقاعدة من البسكويت وطبقة من التوت الأحمر."
+      },
+      "ru": {
+        "name": "Малиновый чизкейк",
+        "description": "Сливочный чизкейк с основой из печенья и малиновым соусом."
+      }
+    }
+  },
+  {
+    "slug": "cikolatali-brownie",
+    "name": "Çikolatalı Brownie",
+    "menuSection": "tatli-meyve",
+    "menuSubsection": "tatlilar",
+    "description": "Yoğun çikolatalı, yumuşak dokulu brownie; çikolata sosuyla servis edilir.",
+    "intensity": 3,
+    "sellingPrice": 210,
+    "costPrice": 70,
+    "imageUrl": "menu-products/cikolatali-brownie.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Chocolate Brownie",
+        "description": "A rich, fudgy chocolate brownie finished with chocolate sauce."
+      },
+      "de": {
+        "name": "Schokoladenbrownie",
+        "description": "Saftiger Brownie mit intensivem Schokoladengeschmack und Schokoladensoße."
+      },
+      "ar": {
+        "name": "براوني بالشوكولاتة",
+        "description": "براوني غني بالشوكولاتة بقوام طري مع صلصة الشوكولاتة."
+      },
+      "ru": {
+        "name": "Шоколадный брауни",
+        "description": "Нежный насыщенный шоколадный брауни с шоколадным соусом."
+      }
+    }
+  },
+  {
+    "slug": "mevsim-meyve-tabagi",
+    "name": "Mevsim Meyve Tabağı",
+    "menuSection": "tatli-meyve",
+    "menuSubsection": "meyveler",
+    "description": "Portakal, kivi, çilek, üzüm ve elma dilimlerinden oluşan meyve tabağı.",
+    "intensity": 3,
+    "sellingPrice": 180,
+    "costPrice": 60,
+    "imageUrl": "menu-products/mevsim-meyve-tabagi.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Seasonal Fruit Plate",
+        "description": "A fresh selection of orange, kiwi, strawberry, grapes and apple slices."
+      },
+      "de": {
+        "name": "Saisonaler Obstteller",
+        "description": "Frische Auswahl aus Orange, Kiwi, Erdbeeren, Trauben und Apfelscheiben."
+      },
+      "ar": {
+        "name": "طبق فواكه موسمية",
+        "description": "تشكيلة طازجة من البرتقال والكيوي والفراولة والعنب وشرائح التفاح."
+      },
+      "ru": {
+        "name": "Тарелка сезонных фруктов",
+        "description": "Свежая подборка апельсина, киви, клубники, винограда и яблочных долек."
+      }
+    }
+  },
+  {
+    "slug": "yogurtlu-meyve-kasesi",
+    "name": "Yoğurtlu Meyve Kasesi",
+    "menuSection": "tatli-meyve",
+    "menuSubsection": "meyveler",
+    "description": "Yoğurt üzerinde çilek, muz, yaban mersini ve çıtır granola.",
+    "intensity": 3,
+    "sellingPrice": 200,
+    "costPrice": 70,
+    "imageUrl": "menu-products/yogurtlu-meyve-kasesi.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Yogurt Fruit Bowl",
+        "description": "Yogurt topped with strawberries, banana, blueberries and crunchy granola."
+      },
+      "de": {
+        "name": "Joghurt-Obst-Bowl",
+        "description": "Joghurt mit Erdbeeren, Banane, Heidelbeeren und knusprigem Granola."
+      },
+      "ar": {
+        "name": "وعاء الزبادي بالفواكه",
+        "description": "زبادي مع الفراولة والموز والتوت الأزرق والغرانولا المقرمشة."
+      },
+      "ru": {
+        "name": "Йогурт с фруктами",
+        "description": "Йогурт с клубникой, бананом, черникой и хрустящей гранолой."
+      }
+    }
+  },
+  {
+    "slug": "karisik-tost",
+    "name": "Karışık Tost",
+    "menuSection": "kahvaltilar",
+    "menuSubsection": "tostlar",
+    "description": "Sucuk, kaşar ve mevsim yeşillikleri ile servis edilir.",
+    "intensity": 4,
+    "sellingPrice": 250,
+    "costPrice": 80,
+    "imageUrl": "menu-products/karisik-tost.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Mixed Toast",
+        "description": "Served with sucuk, kashar cheese, and seasonal greens."
+      },
+      "de": {
+        "name": "Gemischter Toast",
+        "description": "Serviert mit Sucuk, Kaschkaval und saisonalem Grün."
+      },
+      "ar": {
+        "name": "توست مشكل",
+        "description": "يُقدّم مع السجق والجبن الكاشار والخضار الموسمية."
+      },
+      "ru": {
+        "name": "Смешанный тост",
+        "description": "Подаётся с суджуком, сыром кашар и сезонной зеленью."
+      }
+    }
+  },
+  {
+    "slug": "kasarli-tost",
+    "name": "Kaşarlı Tost",
+    "menuSection": "kahvaltilar",
+    "menuSubsection": "tostlar",
+    "description": "Kaşar peynir ve mevsim yeşillikleri ile servis edilir.",
+    "intensity": 3,
+    "sellingPrice": 220,
+    "costPrice": 65,
+    "imageUrl": "menu-products/kasarli-tost.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Kashar Toast",
+        "description": "Served with kashar cheese and seasonal greens."
+      },
+      "de": {
+        "name": "Käsetoast",
+        "description": "Serviert mit Kaschkaval und saisonalem Grün."
+      },
+      "ar": {
+        "name": "توست بالجبن الكاشار",
+        "description": "يُقدّم مع جبن الكاشار والخضار الموسمية."
+      },
+      "ru": {
+        "name": "Тост с кашаром",
+        "description": "Подаётся с сыром кашар и сезонной зеленью."
+      }
+    }
+  },
+  {
+    "slug": "domatesli-beyaz-peynirli-tost",
+    "name": "Domatesli - Beyaz Peynirli Tost",
+    "menuSection": "kahvaltilar",
+    "menuSubsection": "tostlar",
+    "description": "Beyaz peynir, domates, kekik ve mevsim yeşillikleri ile servis edilir.",
+    "intensity": 3,
+    "sellingPrice": 230,
+    "costPrice": 70,
+    "imageUrl": "menu-products/domatesli-beyaz-peynirli-tost.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Tomato and White Cheese Toast",
+        "description": "Served with white cheese, tomato, thyme, and seasonal greens."
+      },
+      "de": {
+        "name": "Toast mit Tomate und Weißkäse",
+        "description": "Serviert mit Weißkäse, Tomate, Thymian und saisonalem Grün."
+      },
+      "ar": {
+        "name": "توست بالطماطم والجبن الأبيض",
+        "description": "يُقدّم مع الجبن الأبيض والطماطم والزعتر والخضار الموسمية."
+      },
+      "ru": {
+        "name": "Тост с томатом и белым сыром",
+        "description": "Подаётся с белым сыром, томатом, тимьяном и сезонной зеленью."
+      }
+    }
+  },
+  {
+    "slug": "peynir-sandvic",
+    "name": "Peynir Sandviç",
+    "menuSection": "kahvaltilar",
+    "menuSubsection": "sandvicler",
+    "description": "Beyaz peynir, kaşar peynir, domates, salatalık ve marul.",
+    "intensity": 3,
+    "sellingPrice": 240,
+    "costPrice": 75,
+    "imageUrl": "menu-products/peynir-sandvic.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Cheese Sandwich",
+        "description": "White cheese, kashar cheese, tomato, cucumber, and lettuce."
+      },
+      "de": {
+        "name": "Käsesandwich",
+        "description": "Weißkäse, Kaschkaval, Tomate, Gurke und Salat."
+      },
+      "ar": {
+        "name": "ساندويش بالجبن",
+        "description": "جبن أبيض، جبن كاشار، طماطم، خيار وخس."
+      },
+      "ru": {
+        "name": "Сэндвич с сыром",
+        "description": "Белый сыр, кашар, томат, огурец и салат."
+      }
+    }
+  },
+  {
+    "slug": "karisik-sandvic",
+    "name": "Karışık Sandviç",
+    "menuSection": "kahvaltilar",
+    "menuSubsection": "sandvicler",
+    "description": "Kaşar peynir, domates, salatalık, marul, hindi füme ve salam.",
+    "intensity": 4,
+    "sellingPrice": 280,
+    "costPrice": 95,
+    "imageUrl": "menu-products/karisik-sandvic.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Mixed Sandwich",
+        "description": "Kashar cheese, tomato, cucumber, lettuce, smoked turkey, and salami."
+      },
+      "de": {
+        "name": "Gemischtes Sandwich",
+        "description": "Kaschkaval, Tomate, Gurke, Salat, geräucherter Truthahn und Salami."
+      },
+      "ar": {
+        "name": "ساندويش مشكل",
+        "description": "جبن كاشار، طماطم، خيار، خس، حبش مدخن وسلامي."
+      },
+      "ru": {
+        "name": "Смешанный сэндвич",
+        "description": "Кашар, томат, огурец, салат, копчёная индейка и салями."
+      }
+    }
+  },
+  {
+    "slug": "ton-balikli-sandvic",
+    "name": "Ton Balıklı Sandviç",
+    "menuSection": "kahvaltilar",
+    "menuSubsection": "sandvicler",
+    "description": "Mor soğan, ton balığı, kornişon turşu, marul, mayonez ve mısır.",
+    "intensity": 3,
+    "sellingPrice": 270,
+    "costPrice": 90,
+    "imageUrl": "menu-products/ton-balikli-sandvic.webp",
+    "isAvailable": true,
+    "translations": {
+      "en": {
+        "name": "Tuna Sandwich",
+        "description": "Red onion, tuna, gherkins, lettuce, mayonnaise, and corn."
+      },
+      "de": {
+        "name": "Thunfischsandwich",
+        "description": "Rote Zwiebel, Thunfisch, Cornichons, Salat, Mayonnaise und Mais."
+      },
+      "ar": {
+        "name": "ساندويش التونة",
+        "description": "بصل أحمر، تونة، مخلل كورنيشون، خس، مايونيز وذرة."
+      },
+      "ru": {
+        "name": "Сэндвич с тунцом",
+        "description": "Красный лук, тунец, корнишоны, салат, майонез и кукуруза."
+      }
+    }
+  }
+]
+

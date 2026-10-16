@@ -125,6 +125,7 @@ const Products = () => {
     const { data } = await api.post('/products/upload-image', formData, {
       headers: {
         Authorization: `Bearer ${session.token}`,
+        'Content-Type': 'multipart/form-data',
       },
     });
     return data.imageUrl;
@@ -288,10 +289,10 @@ const Products = () => {
             </div>
           </details>
 
-          <label htmlFor="product-trait">{mt(`adminProducts.form.traitLabels.${traitKey}`)}
+          {form.menuSection === 'kahveler' && <label htmlFor="product-trait">{mt(`adminProducts.form.traitLabels.${traitKey}`)}
             <select id="product-trait" value={form.intensity} onChange={(event) => updateField('intensity', event.target.value)}>{renderTraitOptions()}</select>
             <small>{mt(`adminProducts.form.traitHelp.${traitKey}`)}</small>
-          </label>
+          </label>}
 
           <div className="admin-product-price-fields">
             <label htmlFor="product-selling-price">{mt('adminProducts.form.sellingPriceLabel')}<input id="product-selling-price" type="number" min="0" step="0.01" inputMode="decimal" value={form.sellingPrice} onChange={(event) => updateField('sellingPrice', event.target.value)} placeholder={mt('adminProducts.form.pricePlaceholder')} required /></label>

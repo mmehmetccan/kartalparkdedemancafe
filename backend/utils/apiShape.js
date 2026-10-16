@@ -1,3 +1,5 @@
+const { normalizeProductImagePath } = require('./imagePath');
+
 const parseJson = (value, fallback = null) => {
     if (value == null) return fallback;
     if (typeof value === 'object') return value;
@@ -38,7 +40,7 @@ const mapProduct = (row) => {
         intensity: row.intensity == null ? undefined : Number(row.intensity),
         sellingPrice: Number(row.selling_price),
         costPrice: Number(row.cost_price),
-        imageUrl: row.image_url || '',
+        imageUrl: normalizeProductImagePath(row.image_url || ''),
         translations: parseJson(row.translations, {}),
         isAvailable: Boolean(row.is_available),
         ...mapTimestamps(row)

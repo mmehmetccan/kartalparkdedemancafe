@@ -39,7 +39,7 @@ router.post('/upload-image', protectAdmin, allowRoles('admin', 'reception', 'che
             return sendError(req, res, 400, 'products.image_required');
         }
         return res.status(201).json({
-            imageUrl: `/uploads/products/${req.file.filename}`
+            imageUrl: `uploads/products/${req.file.filename}`
         });
     });
 });

@@ -23,6 +23,25 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.get('/admin/exists', async (req, res) => {
+    const username = String(req.query.username || '').trim();
+    if (!/^[a-zA-Z0-9._-]{3,40}$/.test(username)) {
+        return res.json({ exists: false });
+    }
+
+    try {
+        const user = await userRepository.findByUsername(username);
+        return res.json({ exists: Boolean(user) });
+    } catch (error) {
+        return res.status(500).json({
+            message: req.t('auth.admin_login_failed'),
+            messageKey: 'auth.admin_login_failed',
+            messageParams: {},
+            errorDetail: error?.message
+        });
+    }
+});
+
 router.post('/admin/login', async (req, res) => {
     const username = String(req.body.username || '').trim();
     const password = String(req.body.password || '');

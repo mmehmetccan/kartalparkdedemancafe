@@ -2,6 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2/promise');
+const { getDatabaseConfig } = require('../config/env');
 
 const runInit = async () => {
     const schemaPath = path.join(__dirname, '..', 'database', 'schema.sql');
@@ -11,11 +12,13 @@ const runInit = async () => {
         .map((statement) => statement.trim())
         .filter(Boolean);
 
+    const config = getDatabaseConfig();
+
     const connection = await mysql.createConnection({
-        host: process.env.DB_HOST || '127.0.0.1',
-        port: Number(process.env.DB_PORT || 3306),
-        user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASSWORD || '',
+        host: config.host,
+        port: config.port,
+        user: config.user,
+        password: config.password,
         multipleStatements: true
     });
 

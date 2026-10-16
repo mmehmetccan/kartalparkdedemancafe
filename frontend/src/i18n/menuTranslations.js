@@ -17,15 +17,16 @@ export const menuTranslations = {
       },
       hero: {
         alt: 'Park Dedeman Kartal otel dinlenme alanı',
-        eyebrow: 'ODA SERVİSİ · HER GÜN',
-        title: 'Bir fincan mutluluk|odanıza gelsin.',
-        body: 'Seçiminizi yapın, siparişinizi keyifle hazırlayalım.'
+        eyebrow: 'ODA SERVİSİ',
+        title: 'Odanızın konforunda.|Taze lezzetler.',
+        body: 'Seçkin lezzetler, özenle hazırlanıp odanıza servis edilir.'
       },
       categories: {
         panelAria: 'Menü kategorileri',
         stageLabel: 'Menü kategori sahnesi',
         intro: 'KATEGORİLER',
         parentNav: 'Ana menü kategorileri',
+        dockAria: 'Sabit menü kategorileri',
         back: 'Tüm kategoriler',
         childrenNav: '{{label}} alt kategorileri',
         allInCategory: 'Tüm {{label}}',
@@ -40,6 +41,10 @@ export const menuTranslations = {
           icecekler: { label: 'İçecekler', description: 'Serin ve klasik içecekler' }
         },
         children: {
+          omletler: { label: 'Omletler', description: 'Taze pişen omlet çeşitleri' },
+          tostlar: { label: 'Tostlar', description: 'Kızarmış tost çeşitleri' },
+          sandvicler: { label: 'Sandviçler', description: 'Taze hazırlanan sandviçler' },
+          'serpme-kahvalti': { label: 'Serpme Kahvaltı', description: 'Zengin serpme kahvaltı tabakları' },
           tatlilar: { label: 'Tatlılar', description: 'Günün tatlı seçkisi' },
           meyveler: { label: 'Meyveler', description: 'Taze hazırlanan meyve tabakları' },
           'sicak-kahveler': { label: 'Sıcak İçecekler', description: 'Klasik ve sıcak servis edilen kahveler' },
@@ -137,6 +142,13 @@ export const menuTranslations = {
         title: 'Siparişiniz alındı.',
         body: 'Ödeme, siparişiniz teslim edilirken alınacaktır.',
         done: 'Tamam'
+      },
+      footer: {
+        kicker: 'ODA SERVİSİ',
+        title: 'Park Dedeman Kartal',
+        body: 'Kahve, kahvaltı ve akşam yemeği — odanızın konforunda taze servis.',
+        hours: 'Her gün oda servisi',
+        location: 'Kartal, İstanbul'
       }
     }
   },
@@ -158,15 +170,16 @@ export const menuTranslations = {
       },
       hero: {
         alt: 'Park Dedeman Kartal hotel lounge area',
-        eyebrow: 'ROOM SERVICE · EVERY DAY',
-        title: 'A cup of happiness,|delivered to your room.',
-        body: 'Make your selection and let us prepare it with care.'
+        eyebrow: 'ROOM SERVICE',
+        title: 'In the comfort of your room.|Fresh flavors.',
+        body: 'Coffee, breakfast or dinner — freshly prepared and brought to your door.'
       },
       categories: {
         panelAria: 'Menu categories',
         stageLabel: 'Menu category stage',
         intro: 'CATEGORIES',
         parentNav: 'Main menu categories',
+        dockAria: 'Pinned menu categories',
         back: 'All categories',
         childrenNav: '{{label}} subcategories',
         allInCategory: 'All {{label}}',
@@ -181,6 +194,10 @@ export const menuTranslations = {
           icecekler: { label: 'Beverages', description: 'Refreshing and classic drinks' }
         },
         children: {
+          omletler: { label: 'Omelettes', description: 'Freshly cooked omelette varieties' },
+          tostlar: { label: 'Toasts', description: 'Grilled toast varieties' },
+          sandvicler: { label: 'Sandwiches', description: 'Freshly prepared sandwiches' },
+          'serpme-kahvalti': { label: 'Full Breakfast', description: 'Rich spread breakfast platters' },
           tatlilar: { label: 'Desserts', description: 'Today’s dessert selection' },
           meyveler: { label: 'Fruits', description: 'Freshly prepared fruit plates' },
           'sicak-kahveler': { label: 'Hot Drinks', description: 'Classic coffees served hot' },
@@ -278,6 +295,13 @@ export const menuTranslations = {
         title: 'Your order has been received.',
         body: 'Payment will be collected when your order is delivered.',
         done: 'Done'
+      },
+      footer: {
+        kicker: 'ROOM SERVICE',
+        title: 'Park Dedeman Kartal',
+        body: 'Coffee, breakfast and dinner — freshly served in the comfort of your room.',
+        hours: 'Room service every day',
+        location: 'Kartal, Istanbul'
       }
     }
   },
@@ -299,15 +323,16 @@ export const menuTranslations = {
       },
       hero: {
         alt: 'Loungebereich des Park Dedeman Kartal Hotels',
-        eyebrow: 'ZIMMERSERVICE · JEDEN TAG',
-        title: 'Eine Tasse Glück –|direkt auf Ihr Zimmer.',
-        body: 'Treffen Sie Ihre Auswahl und wir bereiten sie mit Sorgfalt zu.'
+        eyebrow: 'ZIMMERSERVICE',
+        title: 'Im Komfort Ihres Zimmers.|Frische Genüsse.',
+        body: 'Kaffee, Frühstück oder Abendessen — frisch zubereitet und auf Ihr Zimmer gebracht.'
       },
       categories: {
         panelAria: 'Menükategorien',
         stageLabel: 'Bereich der Menükategorien',
         intro: 'KATEGORIEN',
         parentNav: 'Hauptkategorien des Menüs',
+        dockAria: 'Angepinnte Menükategorien',
         back: 'Alle Kategorien',
         childrenNav: 'Unterkategorien von {{label}}',
         allInCategory: 'Alle {{label}}',
@@ -322,6 +347,10 @@ export const menuTranslations = {
           icecekler: { label: 'Getränke', description: 'Erfrischende und klassische Getränke' }
         },
         children: {
+          omletler: { label: 'Omeletts', description: 'Frisch zubereitete Omelett-Sorten' },
+          tostlar: { label: 'Toasts', description: 'Getoastete Toastvariationen' },
+          sandvicler: { label: 'Sandwiches', description: 'Frisch zubereitete Sandwiches' },
+          'serpme-kahvalti': { label: 'Reichhaltiges Frühstück', description: 'Reichhaltige Frühstücksplatten' },
           tatlilar: { label: 'Desserts', description: 'Die Dessertauswahl des Tages' },
           meyveler: { label: 'Obst', description: 'Frisch vorbereitete Obstplatten' },
           'sicak-kahveler': { label: 'Heiße Getränke', description: 'Klassische Kaffeespezialitäten, heiß serviert' },
@@ -403,6 +432,13 @@ export const menuTranslations = {
         title: 'Ihre Bestellung ist eingegangen.',
         body: 'Die Zahlung wird bei der Lieferung Ihrer Bestellung entgegengenommen.',
         done: 'Fertig'
+      },
+      footer: {
+        kicker: 'ZIMMERSERVICE',
+        title: 'Park Dedeman Kartal',
+        body: 'Kaffee, Frühstück und Abendessen — frisch zubereitet, direkt auf Ihr Zimmer.',
+        hours: 'Zimmerservice täglich',
+        location: 'Kartal, Istanbul'
       }
     }
   },
@@ -424,15 +460,16 @@ export const menuTranslations = {
       },
       hero: {
         alt: 'ردهة فندق بارك ديديمان كارتال',
-        eyebrow: 'خدمة الغرف · كل يوم',
-        title: 'دع فنجاناً من السعادة|يصل إلى غرفتك.',
-        body: 'اختر ما تريده ودعنا نعده لك بعناية.'
+        eyebrow: 'خدمة الغرف',
+        title: 'في راحة غرفتكم.|نكهات طازجة.',
+        body: 'قهوة أو إفطار أو عشاء — نعدّه طازجاً ونوصله إلى بابك.'
       },
       categories: {
         panelAria: 'فئات القائمة',
         stageLabel: 'منصة فئات القائمة',
         intro: 'الفئات',
         parentNav: 'فئات القائمة الرئيسية',
+        dockAria: 'فئات القائمة المثبتة',
         back: 'كل الفئات',
         childrenNav: 'الفئات الفرعية لـ {{label}}',
         allInCategory: 'كل {{label}}',
@@ -447,6 +484,10 @@ export const menuTranslations = {
           icecekler: { label: 'المشروبات', description: 'مشروبات منعشة وكلاسيكية' }
         },
         children: {
+          omletler: { label: 'العجة', description: 'أنواع العجة الطازجة' },
+          tostlar: { label: 'التوست', description: 'أنواع التوست المحمص' },
+          sandvicler: { label: 'الساندويش', description: 'ساندويشات طازجة' },
+          'serpme-kahvalti': { label: 'فطور متكامل', description: 'أطباق فطور غنية ومتنوعة' },
           tatlilar: { label: 'الحلويات', description: 'تشكيلة حلويات اليوم' },
           meyveler: { label: 'الفواكه', description: 'أطباق فواكه طازجة' },
           'sicak-kahveler': { label: 'المشروبات الساخنة', description: 'قهوة كلاسيكية تقدم ساخنة' },
@@ -528,6 +569,13 @@ export const menuTranslations = {
         title: 'تم استلام طلبك.',
         body: 'سيتم تحصيل الدفع عند تسليم طلبك.',
         done: 'حسنًا'
+      },
+      footer: {
+        kicker: 'خدمة الغرف',
+        title: 'Park Dedeman Kartal',
+        body: 'قهوة وفطور وعشاء — يُقدَّم طازجاً في راحة غرفتكم.',
+        hours: 'خدمة الغرف يومياً',
+        location: 'كرتال، إسطنبول'
       }
     }
   },
@@ -549,15 +597,16 @@ export const menuTranslations = {
       },
       hero: {
         alt: 'Зона отдыха отеля Park Dedeman Kartal',
-        eyebrow: 'ОБСЛУЖИВАНИЕ В НОМЕРЕ · КАЖДЫЙ ДЕНЬ',
-        title: 'Чашка счастья —|прямо в ваш номер.',
-        body: 'Сделайте выбор, а мы с заботой всё приготовим.'
+        eyebrow: 'ОБСЛУЖИВАНИЕ В НОМЕРЕ',
+        title: 'В комфорте вашего номера.|Свежие блюда.',
+        body: 'Кофе, завтрак или ужин — приготовим свежим и принесём к двери.'
       },
       categories: {
         panelAria: 'Категории меню',
         stageLabel: 'Сцена категорий меню',
         intro: 'КАТЕГОРИИ',
         parentNav: 'Основные категории меню',
+        dockAria: 'Закреплённые категории меню',
         back: 'Все категории',
         childrenNav: 'Подкатегории {{label}}',
         allInCategory: 'Все {{label}}',
@@ -572,6 +621,10 @@ export const menuTranslations = {
           icecekler: { label: 'Напитки', description: 'Освежающие и классические напитки' }
         },
         children: {
+          omletler: { label: 'Омлеты', description: 'Свежеприготовленные омлеты' },
+          tostlar: { label: 'Тосты', description: 'Поджаренные тосты' },
+          sandvicler: { label: 'Сэндвичи', description: 'Свежие сэндвичи' },
+          'serpme-kahvalti': { label: 'Плотный завтрак', description: 'Богатые завтраки на тарелке' },
           tatlilar: { label: 'Десерты', description: 'Сегодняшняя подборка десертов' },
           meyveler: { label: 'Фрукты', description: 'Свежие фруктовые тарелки' },
           'sicak-kahveler': { label: 'Горячие напитки', description: 'Классический кофе, подаваемый горячим' },
@@ -653,6 +706,13 @@ export const menuTranslations = {
         title: 'Ваш заказ получен.',
         body: 'Оплата производится при доставке заказа.',
         done: 'Готово'
+      },
+      footer: {
+        kicker: 'ОБСЛУЖИВАНИЕ НОМЕРОВ',
+        title: 'Park Dedeman Kartal',
+        body: 'Кофе, завтрак и ужин — свежие блюда в комфорте вашего номера.',
+        hours: 'Обслуживание номеров каждый день',
+        location: 'Картал, Стамбул'
       }
     }
   }
